@@ -30,7 +30,8 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 META_PATH = HERE / "metadata.json"
 STATE_PATH = HERE / "deposition_state.json"
-PARENT_ID = 21287252
+# Latest published version in the concept family (update after each publish)
+PARENT_ID = 21753560
 
 # (local path, remote filename)
 UPLOADS = [

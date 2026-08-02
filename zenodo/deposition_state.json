@@ -1,12 +1,12 @@
 {
-  "deposition_id": 21753540,
-  "parent_id": 21287252,
-  "doi": "10.5281/zenodo.21753540",
-  "doi_url": "https://doi.org/10.5281/zenodo.21753540",
+  "deposition_id": 21753560,
+  "parent_id": 21753540,
+  "doi": "10.5281/zenodo.21753560",
+  "doi_url": "https://doi.org/10.5281/zenodo.21753560",
   "concept_doi": "10.5281/zenodo.21287251",
   "concept_doi_url": "https://doi.org/10.5281/zenodo.21287251",
-  "record_html": "https://zenodo.org/record/21753540",
+  "record_html": "https://zenodo.org/record/21753560",
   "published": true,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "title": "Systemic Tau and Hierarchical Ordinal Conjunctions: A Relational Theory of Critical Transitions"
 }

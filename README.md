@@ -8,12 +8,14 @@ Paper de fundamentos:
 
 ## Citation / DOI
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21753540.svg)](https://doi.org/10.5281/zenodo.21753540)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21753560.svg)](https://doi.org/10.5281/zenodo.21753560)
 
-- **Version DOI** (v1.1.0, this release): [10.5281/zenodo.21753540](https://doi.org/10.5281/zenodo.21753540)  
+- **Version DOI** (v1.1.1, this release): [10.5281/zenodo.21753560](https://doi.org/10.5281/zenodo.21753560)  
 - **Concept DOI** (all versions): [10.5281/zenodo.21287251](https://doi.org/10.5281/zenodo.21287251)  
 - **GitHub**: [johelpadilla/systemic-tau-recd-foundations](https://github.com/johelpadilla/systemic-tau-recd-foundations)  
 - **Code (nested-recd)**: [10.5281/zenodo.21386071](https://doi.org/10.5281/zenodo.21386071)
+
+The PDF title page carries a footnote with the version DOI, concept DOI, and repository URL.
 
 ```bibtex
 @misc{padilla2026systemic_tau_foundations,
@@ -21,10 +23,10 @@ Paper de fundamentos:
   title        = {Systemic Tau and Hierarchical Ordinal Conjunctions:
                   A Relational Theory of Critical Transitions},
   year         = {2026},
-  version      = {1.1.0},
+  version      = {1.1.1},
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.21753540},
-  url          = {https://doi.org/10.5281/zenodo.21753540}
+  doi          = {10.5281/zenodo.21753560},
+  url          = {https://doi.org/10.5281/zenodo.21753560}
 }
 ```
 
