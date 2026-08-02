@@ -1,0 +1,694 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\hypersetup{
+  pdftitle={Nota formal: Sinergia irreducible, Res, excess3 y PID},
+  pdfauthor={Johel Padilla-Villanueva},
+  pdfkeywords={RECD, Res, excess3, PID, O-information, sinergia irreducible}
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposici\'on}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[section]
+\newtheorem{conjecture}{Conjetura}[section]
+\theoremstyle{remark}
+\newtheorem{scholium}{Scholium}[section]
+
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\TC}{\mathrm{TC}}
+\newcommand{\Syn}{\mathrm{Syn}}
+\newcommand{\Surp}{\mathrm{Surp}}
+\newcommand{\excess}{\mathrm{excess3}}
+\newcommand{\Rtwo}{\mathcal{R}_{2}}
+\newcommand{\Rind}{\mathcal{R}_{\mathrm{ind}}}
+\newcommand{\Rpair}{\mathcal{R}_{\mathrm{pair}}}
+\newcommand{\Jwin}{\mathcal{J}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\claim}{\mathsf{Claim}}
+\newcommand{\RECD}{\mathrm{RECD}}
+
+\title{\textbf{Nota formal}\\[0.4em]
+\large Sinergia irreducible: residuo $\Res$, proxy $\excess$,\\
+PID y condiciones de aparici\'on\\[0.6em]
+\normalsize (Punto 2 del roadmap te\'orico; asume Nota formal 1a--1c)}
+
+\author{
+Johel Padilla-Villanueva\\
+\textit{Department of Environmental Health, University of Puerto Rico}\\
+\texttt{johelpadilla@gmail.com}
+}
+
+\date{2026-08-01 \quad$\cdot$\quad v0.1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Asumiendo el canon de la Nota formal~1 (Nivel~3 $:=$ residuo
+$\Res(\Jwin;\Rtwo)$), esta nota caracteriza matem\'aticamente ese residuo,
+lo sit\'ua frente a multiinformaci\'on, O-information y PID, y
+\emph{delimita} el estatus de $\excess=0.6\,\Syn+0.4\,\Surp$ como proxy.
+Se demuestran identidades y desigualdades exactas (TC como KL a
+independencia; monoton\'ia del residuo al enriquecer la clase de
+reducci\'on; separaci\'on Syn/Surp), se exhiben contraejemplos que impiden
+identificar $\excess$ con un \'atomo PID, y se formulan condiciones
+necesarias/suficientes operativas para la aparici\'on de sinergia
+irreducible, m\'as el comportamiento bajo transformaciones mon\'otonas y
+proyecciones a pares. El resultado es una identidad te\'orica fuerte del
+Nivel~3 \emph{sin} sobreclaim de PID completo.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+% ============================================================
+\section{Dependencia de la Nota 1 y pureza}
+\label{sec:dep}
+
+\begin{scholium}[Canon heredado]
+Valen sin reabrir: tres planos (claim / estimador / reloj);
+A1--A3; Nivel~3 $:=$ $\Res(\Jwin;\Rtwo)>\theta_3$;
+$\excess$ es proxy, no definici\'on; anidamiento Tipo~II;
+M-I-1 (no se demuestra el acto de ser).
+\end{scholium}
+
+\begin{scholium}[Anti-overclaim]
+Nada de lo siguiente afirma que $\excess$ sea un \'atomo axiom\'atico de
+PID, ni causalidad, ni el reloj RECD completo (T-IV / M-IV-2).
+\end{scholium}
+
+Notaci\'on: $\Sigma=S_m$ (alfabeto Bandt--Pompe), $P\in\mathcal{P}(\Sigma^d)$
+denota una ley joint (t\'ipicamente la emp\'irica $\Jwin_t^{(w)}$),
+$P_i$ sus m\'argenes, $P_{ij}$ las bipolares.
+
+% ============================================================
+\section{Jerarqu\'ia de clases de reducci\'on}
+\label{sec:classes}
+
+\begin{definition}[Tres clases anidadas]
+\label{def:classes}
+\begin{align}
+\Rind
+&:=\Bigl\{Q\in\mathcal{P}(\Sigma^d):
+Q(s)=\prod_{i=1}^d q_i(s_i)\Bigr\},\\
+\Rpair
+&:=\Bigl\{Q:
+\log Q(s)
+=\sum_i\theta_i(s_i)+\sum_{i<j}\theta_{ij}(s_i,s_j)
+-\psi(\theta)\Bigr\}
+\end{align}
+(familia exponencial de interacciones de orden $\le 2$, con funci\'on
+de partici\'on $\psi$), y $\Rtwo$ denota, en un protocolo dado, una de
+$\Rind$, $\Rpair$, o una clase inter\-media declarada.
+Siempre $\Rind\subset\Rpair\subset\mathcal{P}(\Sigma^d)$ (la independencia
+es el caso $\theta_{ij}\equiv 0$).
+\end{definition}
+
+\begin{definition}[Residuos KL]
+\label{def:ResKL}
+Con divergencia de Kullback--Leibler $\KL(P\|Q)=\sum_s P(s)\log_2\frac{P(s)}{Q(s)}$
+(en bits; $0\log 0:=0$),
+\begin{equation}
+\label{eq:ResKL}
+\Res_{\mathrm{KL}}(P;\mathcal{R})
+:=\inf_{Q\in\mathcal{R}}\KL(P\|Q).
+\end{equation}
+Escribimos $\Res_{\mathrm{ind}}:=\Res_{\mathrm{KL}}(P;\Rind)$ y
+$\Res_{\mathrm{pair}}:=\Res_{\mathrm{KL}}(P;\Rpair)$.
+\end{definition}
+
+\begin{proposition}[Monoton\'ia al enriquecer la clase]
+\label{prop:mono}
+Si $\mathcal{R}\subset\mathcal{R}'$, entonces
+$\Res_{\mathrm{KL}}(P;\mathcal{R}')\le\Res_{\mathrm{KL}}(P;\mathcal{R})$.
+En particular
+\begin{equation}
+0\le\Res_{\mathrm{pair}}(P)\le\Res_{\mathrm{ind}}(P).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+El \'infimo sobre un conjunto m\'as grande no crece.
+\end{proof}
+
+\begin{remark}
+El Nivel~3 \emph{fuerte} (irreductibilidad genuina a pares) es
+$\Res_{\mathrm{pair}}>0$. El Nivel~3 \emph{d\'ebil} (no-factorizaci\'on total)
+es $\Res_{\mathrm{ind}}>0$. El paradigma RECD apunta al fuerte; el proxy
+$\excess$ mezcla se\~nales de ambos (Syn $\sim$ fuerte-heur\'istico;
+Surp $\sim$ d\'ebil).
+\end{remark}
+
+% ============================================================
+\section{Identidades exactas: TC, independencia, Surp}
+\label{sec:identities}
+
+\begin{theorem}[Total correlation como residuo a independencia]
+\label{thm:TC}
+Sea $P\in\mathcal{P}(\Sigma^d)$ con m\'argenes $P_i$ y
+$P_{\mathrm{ind}}:=\prod_{i=1}^d P_i\in\Rind$. Entonces
+\begin{equation}
+\label{eq:TC_KL}
+\TC(P)
+:=\sum_{i=1}^d H(P_i)-H(P)
+=\KL\bigl(P\,\|\,P_{\mathrm{ind}}\bigr)
+=\Res_{\mathrm{ind}}(P).
+\end{equation}
+Adem\'as, el infimo que define $\Res_{\mathrm{ind}}$ se alcanza en
+$P_{\mathrm{ind}}$ (producto de las m\'argenes \emph{de} $P$).
+\end{theorem}
+
+\begin{proof}
+Para cualquier $Q=\prod q_i\in\Rind$,
+\[
+\KL(P\|Q)
+=\sum_s P(s)\log\frac{P(s)}{\prod q_i(s_i)}
+= -H(P)-\sum_i\sum_{a}P_i(a)\log q_i(a).
+\]
+La entrop\'ia cruzada $-\sum_a P_i(a)\log q_i(a)$ se minimiza en $q_i=P_i$,
+con m\'inimo $H(P_i)$. Sumando,
+$\inf_{Q\in\Rind}\KL(P\|Q)=\sum_i H(P_i)-H(P)=\TC(P)=\KL(P\|P_{\mathrm{ind}})$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:Res_ind_zero}
+$\Res_{\mathrm{ind}}(P)=0$ sii $P=\prod P_i$ (independencia total).
+\end{corollary}
+
+\begin{definition}[Surprise de independencia del proxy]
+\label{def:Surp}
+Con $p_{\mathrm{obs}}=P$ y $p_{\mathrm{ind}}=P_{\mathrm{ind}}$,
+\begin{equation}
+\label{eq:Surp}
+\Surp(P)
+:=\sum_{s}P(s)\,
+\Bigl[\log_2\frac{P(s)}{P_{\mathrm{ind}}(s)}\Bigr]_+.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Relaci\'on Surp--TC]
+\label{prop:Surp_TC}
+\begin{enumerate}[label=(\roman*)]
+  \item $\Surp(P)\ge 0$ y $\Surp(P)=0$ sii $P(s)\le P_{\mathrm{ind}}(s)$
+  para todo $s$ en el soporte de $P$ (en particular si $P=P_{\mathrm{ind}}$).
+  \item Descomponiendo el integrando de $\TC$ en partes positiva y
+  negativa del information density
+  $i(s):=\log_2\frac{P(s)}{P_{\mathrm{ind}}(s)}$,
+  \begin{equation}
+  \TC(P)=\mathbb{E}_P[i]_+-\mathbb{E}_P[i]_-
+  =\Surp(P)-\mathbb{E}_P\bigl[(-i)_+\bigr],
+  \end{equation}
+  de modo que $\Surp(P)\ge\TC(P)$, con igualdad sii $i(s)\ge 0$ en todo el
+  soporte de $P$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)~inmediato. (ii)~$\TC=\mathbb{E}_P[i]=\mathbb{E}_P[i]_+-\mathbb{E}_P[(-i)_+]$
+y $\Surp=\mathbb{E}_P[i]_+$.
+\end{proof}
+
+\begin{remark}
+Surp \emph{no} es un residuo a $\Rpair$: penaliza desviaciones por encima
+del producto de m\'argenes, incluyendo estructura que un modelo de pares
+podr\'ia explicar por completo.
+\end{remark}
+
+% ============================================================
+\section{Syn, baseline de pares y residuo a $\Rpair$}
+\label{sec:Syn}
+
+\begin{definition}[Baseline de pares del proxy]
+\label{def:Ipair}
+Sea $\overline{I}:=\frac{2}{d(d-1)}\sum_{i<j}I(P_i;P_j)$ la MI media de
+pares y
+\begin{equation}
+\label{eq:Ipair}
+I_{\mathrm{pair}}(P):=(d-1)\,\overline{I}.
+\end{equation}
+(El factor $d-1$ es el contrato metodol\'ogico del paper de fundamentos /
+methods excess3: hace $I_{\mathrm{pair}}$ dimensionalmente comparable a un
+residual de multiinformaci\'on en un \'arbol o cadena de $d-1$ enlaces.)
+\end{definition}
+
+\begin{definition}[Syn del proxy]
+\label{def:Syn}
+\begin{equation}
+\label{eq:Syn}
+\Syn(P):=\bigl[\TC(P)-I_{\mathrm{pair}}(P)\bigr]_+.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Propiedades elementales de Syn]
+\label{prop:Syn_props}
+\begin{enumerate}[label=(\roman*)]
+  \item $0\le\Syn(P)\le\TC(P)=\Res_{\mathrm{ind}}(P)$.
+  \item Si $d=2$, entonces $\TC(P)=I(P_1;P_2)$ e
+  $I_{\mathrm{pair}}(P)=I(P_1;P_2)$, luego $\Syn(P)=0$ siempre.
+  El Nivel~3 fuerte es vac\'io para $d=2$: hace falta $d\ge 3$.
+  \item $\Syn$ \textbf{no} coincide en general con
+  $\Res_{\mathrm{pair}}$: restar $(d-1)\overline{I}$ no es resolver el
+  problema de proyecci\'on $\inf_{Q\in\Rpair}\KL(P\|Q)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i)--(ii)~c\'alculo directo. (iii)~$\Rpair$ maximiza entrop\'ia (minimiza
+KL desde $P$) bajo constraints de m\'argenes bipolares; la soluci\'on es
+el m\'aximo-entrop\'ia de orden 2, no la resta de un promedio de MI.
+\end{proof}
+
+\begin{definition}[Proyecci\'on de m\'axima entrop\'ia a pares]
+\label{def:maxent2}
+Sea $P^{(2)}\in\Rpair$ la (o una) proyecci\'on I-proyecci\'on de $P$ sobre
+$\Rpair$: la ley de m\'axima entrop\'ia con las mismas bipolares
+$\{P_{ij}\}$ que $P$ (cuando existe y es \'unica en el interior relativo).
+Entonces
+\begin{equation}
+\label{eq:Res_pair_id}
+\Res_{\mathrm{pair}}(P)=\KL\bigl(P\,\|\,P^{(2)}\bigr)
+\end{equation}
+bajo la existencia est\'andar de la I-proyecci\'on (alfabeto finito,
+soporte compatible).
+\end{definition}
+
+\begin{theorem}[Descomposici\'on de la multiinformaci\'on]
+\label{thm:decomp}
+Siempre que exista $P^{(2)}$,
+\begin{equation}
+\label{eq:decomp}
+\TC(P)
+=\KL\bigl(P\,\|\,P_{\mathrm{ind}}\bigr)
+=\KL\bigl(P\,\|\,P^{(2)}\bigr)
++\KL\bigl(P^{(2)}\,\|\,P_{\mathrm{ind}}\bigr),
+\end{equation}
+es decir
+\begin{equation}
+\Res_{\mathrm{ind}}(P)
+=\Res_{\mathrm{pair}}(P)
++\TC\bigl(P^{(2)}\bigr).
+\end{equation}
+As\'i, $\TC$ se parte en: (a)~residuo irreducible a pares
+$\Res_{\mathrm{pair}}$; (b)~multiinformaci\'on \emph{explicable por pares}
+$\TC(P^{(2)})$.
+\end{theorem}
+
+\begin{proof}
+Es la identidad de Pitman--Pythagoras para I-proyecciones en familias
+exponenciales (o la cadena de KL cuando $P^{(2)}$ es la I-proyecci\'on de
+$P$ sobre $\Rpair$ y $P_{\mathrm{ind}}$ es la I-proyecci\'on de $P^{(2)}$
+sobre $\Rind\subset\Rpair$): 
+$\KL(P\|P_{\mathrm{ind}})=\KL(P\|P^{(2)})+\KL(P^{(2)}\|P_{\mathrm{ind}})$.
+\end{proof}
+
+\begin{corollary}[Criterio limpio de sinergia irreducible fuerte]
+\label{cor:strong}
+$\Res_{\mathrm{pair}}(P)>0$ sii $P\ne P^{(2)}$: el joint no es un modelo de
+pares. Equivalentemente, $\TC(P)>\TC(P^{(2)})$.
+\end{corollary}
+
+\begin{scholium}[Lectura para el paradigma]
+La frase ``sinergia irreducible en t\'erminos ordinales'' se especializa
+ahora a:
+\[
+\claim_3^{\mathrm{strong}}(t)
+:\iff
+\Res_{\mathrm{pair}}\bigl(\Jwin_t^{(w)}\bigr)>\theta_3.
+\]
+El Nivel~3 no es ``TC alto'': TC alto puede ser casi todo
+$\TC(P^{(2)})$ (driver com\'un / red de pares).
+\end{scholium}
+
+% ============================================================
+\section{Estatus exacto de $\excess$}
+\label{sec:excess_status}
+
+\begin{definition}[Contrato del proxy]
+\label{def:excess}
+\begin{equation}
+\excess(P)=0.6\,\Syn(P)+0.4\,\Surp(P),
+\end{equation}
+con pesos fijos \emph{a priori} (nunca optimizados sobre el dataset
+cient\'ifico bajo prueba).
+\end{definition}
+
+\begin{theorem}[Lo que $\excess$ \emph{s\'i} controla]
+\label{thm:excess_yes}
+\begin{enumerate}[label=(\roman*)]
+  \item Si $P\in\Rind$, entonces $\TC=\Syn=\Surp=\excess=0$ y
+  $\Res_{\mathrm{pair}}=0$.
+  \item Si $\excess(P)>0$, entonces $P\notin\Rind$ (al menos una de
+  $\Syn,\Surp$ es positiva $\Rightarrow$ desviaci\'on de independencia o
+  residual de TC tras baseline de pares).
+  \item Para $d=2$, $\Syn\equiv 0$ y $\excess=0.4\,\Surp$ colapsa a una
+  funci\'on mon\'otona de la desviaci\'on positiva de independencia
+  (no hay orden 3).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)~Thm.~\ref{thm:TC} y Defs.~\ref{def:Syn}--\ref{def:Surp}.
+(ii)~si ambas son 0: $\Surp=0$ y $\TC\le I_{\mathrm{pair}}$; si adem\'as
+$P\in\Rind$ entonces todo es 0; si $\Surp=0$ y $\Syn=0$ a\'un podr\'ia
+haber $P\notin\Rind$ con $i\le 0$ en el soporte y $\TC\le I_{\mathrm{pair}}$,
+pero $\TC=\Res_{\mathrm{ind}}\ge 0$ y $\Surp\ge\TC$ (Prop.~\ref{prop:Surp_TC})
+implican $\TC=0$, luego $P\in\Rind$. As\'i $\excess=0\Rightarrow P\in\Rind$
+en esta cadena; contrapositiva: $\excess>0\Rightarrow P\notin\Rind$.
+(iii)~Prop.~\ref{prop:Syn_props}(ii).
+\end{proof}
+
+\begin{theorem}[Lo que $\excess$ \emph{no} garantiza]
+\label{thm:excess_no}
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Falso:} $\excess>0\Rightarrow\Res_{\mathrm{pair}}>0$.
+  Contraejemplo de clase: $P\in\Rpair\setminus\Rind$ (dependencia pura de
+  pares). Entonces $\Res_{\mathrm{pair}}=0$, pero $\TC>0$ y t\'ipicamente
+  $\Surp>0$, luego $\excess>0$ v\'ia Surp aunque no haya sinergia fuerte.
+  \item \textbf{Falso:} $\Syn=0\Rightarrow\Res_{\mathrm{pair}}=0$.
+  El baseline $(d-1)\overline{I}$ puede sobrestimar la masa de pares
+  explicable, anulando Syn mientras $\KL(P\|P^{(2)})>0$.
+  \item \textbf{Falso:} $\Syn>0\Rightarrow$ \'atomo sin\'ergico PID $>0$
+  bajo toda descomposici\'on PID (depende del lattice y del estimador).
+  \item Los pesos $0.6/0.4$ no son \'unicos ni \'optimos en ning\'un
+  sentido de informaci\'on; son contrato de falsabilidad.
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[Driver com\'un vs candado XOR]
+\label{ex:driver_xor}
+\begin{itemize}
+  \item \textbf{Driver com\'un:} $X_2,X_3$ copias ruidosas de $X_1$.
+  Las bipolares capturan casi todo: $\Res_{\mathrm{pair}}\approx 0$,
+  $\TC\approx\TC(P^{(2)})$, $\Syn\approx 0$, $\Surp$ puede ser alto
+  $\Rightarrow$ $\excess$ inflado por Surp \emph{sin} Nivel~3 fuerte.
+  \item \textbf{XOR / paridad:} $X_3=X_1\oplus X_2$ (alfabeto adecuado),
+  pares marginalmente independientes. Entonces $\overline{I}\approx 0$,
+  $\TC>0$, $\Syn\approx\TC$, $\Surp>0$, $\Res_{\mathrm{pair}}>0$:
+  aqu\'i proxy y residuo fuerte co-direccionan.
+\end{itemize}
+\end{example}
+
+\begin{scholium}[Diagn\'ostico operativo honesto]
+Para no confundir driver com\'un con sinergia:
+reportar \emph{separados} $\Syn$, $\Surp$, $\excess$, y cuando $d$ y
+$|\Sigma|^d$ lo permitan, un estimador de $\Res_{\mathrm{pair}}$
+(p.ej.\ $\KL(P\|P^{(2)})$ v\'ia iterative proportional fitting a
+bipolares). El h\'ibrido $\excess$ es un indicador de screening, no el
+veredicto de irreductibilidad.
+\end{scholium}
+
+% ============================================================
+\section{Puente a PID y O-information}
+\label{sec:PID}
+
+\begin{definition}[O-information (recordatorio)]
+\label{def:Oinfo}
+La O-information de Rosas et al.\ es
+\begin{equation}
+\Omega(P)
+=(d-2)\sum_i H(P_i)
++\sum_{i<j}H(P_{ij})
+-\bigl[(d-1)H(P)+\cdots\bigr]
+\end{equation}
+(en la forma est\'andar para $d$ variables; signo positivo $\sim$
+redundancia dominante, negativo $\sim$ sinergia dominante). No la
+rederivamos: solo fijamos el rol.
+\end{definition}
+
+\begin{proposition}[Mapa de parentesco]
+\label{prop:map}
+\begin{center}
+\begin{tabular}{@{}p{0.28\textwidth}p{0.32\textwidth}p{0.32\textwidth}@{}}
+\toprule
+Objeto & Captura & Relaci\'on con Nivel~3 \\
+\midrule
+$\TC=\Res_{\mathrm{ind}}$ & Toda dependencia vs independencia &
+Necesario d\'ebil; no suficiente fuerte \\
+$\Res_{\mathrm{pair}}$ & Residuo vs modelos de pares &
+\textbf{Definici\'on fuerte de L3} \\
+$\Syn$ & Heur\'istica $\TC-(d-1)\overline{I}$ &
+Proxy de $\Res_{\mathrm{pair}}$, sesgable \\
+$\Surp$ & Masa de co-ocurrencias sobre $P_{\mathrm{ind}}$ &
+Se\~nal d\'ebil (L3 d\'ebil / pares) \\
+$\excess$ & H\'ibrido fijo $0.6/0.4$ &
+Screening preespecificado \\
+O-information $\Omega$ & Balance sinergia/redundancia global &
+Correlaciona con L3 en reg\'imenes; $\ne\Res$ \\
+\'Atomos PID & Lattice nonneg.\ de partial info.\ &
+Ideal local; no siempre estimable \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{conjecture}[Puente cuantitativo Syn--$\Res_{\mathrm{pair}}$; refinada]
+\label{conj:bridge}
+Existe una subclase $\mathcal{P}_\ast\subset\mathcal{P}(\Sigma^d)$
+(p.ej.\ $d\le 4$, $m=3$, $P$ de soporte lleno o acotado, ventanas $w$ con
+concentraci\'on) y constantes $0<c\le C<\infty$ tales que
+\begin{equation}
+c\,\Res_{\mathrm{pair}}(P)
+\le \Syn(P)
+\le C\,\Res_{\mathrm{pair}}(P)
+\qquad\text{para todo }P\in\mathcal{P}_\ast.
+\end{equation}
+\textbf{Estado:} abierta. La desigualdad izquierda es la delicada
+(Syn puede anularse con $\Res_{\mathrm{pair}}>0$). La derecha es m\'as
+plausible cuando $I_{\mathrm{pair}}$ no sobrecuenta en exceso.
+Delimitaci\'on emp\'irica: validar en (i)~XOR, (ii)~driver com\'un,
+(iii)~mapas log\'isticos acoplados pre/chaos del paper de fundamentos.
+\end{conjecture}
+
+\begin{conjecture}[Puente $\excess$--$\Res$ en la clase de trabajo RECD]
+\label{conj:excess_bridge}
+En la clase de leyes emp\'iricas generadas por mapas acoplados y por
+sistemas con masa sin\'ergica dominante (no driver-puro),
+$\excess$ es mon\'otono en media con $\Res_{\mathrm{pair}}$ y con la tasa
+$\mathbb{P}(\Res_{\mathrm{pair}}>\theta)$. \textbf{No} se conjetura
+equivalencia global (Thm.~\ref{thm:excess_no}).
+\end{conjecture}
+
+\begin{remark}[PID como extensi\'on natural A-IV-1]
+Cuando un estimador PID estable est\'e disponible sobre $\Sigma^d$, la
+sustituci\'on can\'onica es
+\[
+M_3^{\mathrm{PID}}(t):=S_{\mathrm{PID}}\bigl(\Jwin_t^{(w)}\bigr)
+\]
+(el \'atomo sin\'ergico del lattice elegido), manteniendo $\excess$ como
+fallback de screening. Eso \emph{instancia} $\Res$ en un \'atomo, no
+redefine el reloj.
+\end{remark}
+
+% ============================================================
+\section{Condiciones de aparici\'on}
+\label{sec:conditions}
+
+\begin{proposition}[Condiciones necesarias]
+\label{prop:nec}
+Para $\Res_{\mathrm{pair}}(P)>0$ es necesario:
+\begin{enumerate}[label=(\roman*)]
+  \item $d\ge 3$;
+  \item $P\notin\Rind$ (en particular $\TC(P)>0$);
+  \item $P$ no es funci\'on de un grafo de pares exacto
+  ($P\ne P^{(2)}$);
+  \item el soporte de $P$ no se factoriza como producto de
+  soportes bipolares consistentes con un MRF de pares sin ciclos de
+  interacci\'on de orden 3 (en el sentido de Hammersley--Clifford para
+  interacciones $\le 2$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Condiciones suficientes (constructivas)]
+\label{prop:suf}
+Basta cualquiera de las siguientes:
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Paridad / XOR generalizado:} existe una funci\'on
+  $f:\Sigma^{d-1}\to\Sigma$ no representable por dependencias de pares
+  tal que $P$ se concentra en el grafo de $x_d=f(x_1,\ldots,x_{d-1})$ y
+  las bipolares son product\-like;
+  \item \textbf{Interacci\'on log-lineal de orden 3:}
+  $P\in$ familia exponencial con alg\'un $\theta_{ijk}\ne 0$ y
+  proyecci\'on a $\Rpair$ que no reabsorbe esa interacci\'on;
+  \item \textbf{Invariante que muere:} existe $I$ con $I\equiv 0$ en
+  $\Rpair$ e $I(P)>0$ (Def.\ de Nota~1).
+\end{enumerate}
+\end{proposition}
+
+\begin{conjecture}[Aparici\'on en la cascada de Feigenbaum; puente a pto.~4]
+\label{conj:feigenbaum}
+En familias de mapas unimodales acoplados d\'ebilmente, al cruzar la
+acumulaci\'on de Feigenbaum hacia caos desarrollado,
+$\mathbb{E}[\Res_{\mathrm{pair}}]$ y $\mathbb{E}[\Syn]$ crecen de forma no
+explicada por un mero rescaling de $\mathbb{E}[|\tau_s|]$ o de
+$\mathbb{E}[\Phi_1]$. Evidencia sint\'etica existente (exceso de mass
+L3 pre$\to$chaos) es compatible; falta el teorema.
+\end{conjecture}
+
+% ============================================================
+\section{Comportamiento bajo transformaciones}
+\label{sec:transforms}
+
+\begin{theorem}[Invariancia ordinal]
+\label{thm:ordinal_inv}
+Si $Z^{(i)}=f_i(X^{(i)})$ con cada $f_i$ estrictamente creciente, entonces
+el proceso de s\'imbolos $S$ es id\'entico, y por tanto
+$\TC$, $\Syn$, $\Surp$, $\excess$, $\Res_{\mathrm{ind}}$,
+$\Res_{\mathrm{pair}}$ (sobre $S$) son id\'enticos.
+\end{theorem}
+
+\begin{proof}
+Axioma A1 / Bandt--Pompe: las permutaciones no cambian.
+\end{proof}
+
+\begin{proposition}[Proyecci\'on a subconjuntos de variables]
+\label{prop:marginalize}
+Sea $P_A$ la marginal de $P$ sobre $A\subset\{1,\ldots,d\}$ con
+$|A|\ge 3$. Entonces $\Res_{\mathrm{pair}}(P_A)$ puede ser positiva
+aunque se calcule en un subconjunto; pero
+$\Res_{\mathrm{pair}}(P)=0$ \emph{no} implica $\Res_{\mathrm{pair}}(P_A)=0$
+ni rec\'iprocamente de forma libre (la irreductibilidad no es mon\'otona
+trivial bajo marginaci\'on).
+\end{proposition}
+
+\begin{proposition}[Qu\'e se pierde al proyectar a pares]
+\label{prop:loses}
+La aplicaci\'on $P\mapsto P^{(2)}$ (o $P\mapsto\{P_{ij}\}$) anula todo
+funcional que sea invariante de orden superior. En particular
+$\Res_{\mathrm{pair}}(P^{(2)})=0$ y todo \'atomo sin\'ergico PID de $P^{(2)}$
+es nulo. Eso es la formulaci\'on operativa de ``invariantes que
+desaparecen al proyectar a niveles inferiores''.
+\end{proposition}
+
+\begin{proposition}[Permutaci\'on de canales]
+\label{prop:perm}
+Si $\sigma\in S_d$ reordena coordenadas,
+$\Res_{\mathrm{pair}}(P\circ\sigma^{-1})=\Res_{\mathrm{pair}}(P)$ y lo
+mismo para $\TC,\Syn,\Surp,\excess$ (simetr\'ia del joint).
+\end{proposition}
+
+% ============================================================
+\section{Protocolo de uso te\'orico-operativo}
+\label{sec:protocol}
+
+\begin{enumerate}[label=\textbf{P\arabic*.}]
+  \item \textbf{Definir} Nivel~3 fuerte como $\Res_{\mathrm{pair}}>\theta_3$
+  (claim).
+  \item \textbf{Estimar} cuando sea factible: $P^{(2)}$ por IPF/maxent
+  de pares y $\KL(P\|P^{(2)})$; si no, usar $\Syn$ como cota/proxy
+  principal de irreductibilidad y $\Surp$ como se\~nal de
+  no-independencia.
+  \item \textbf{Reportar} siempre el triple $(\Syn,\Surp,\excess)$
+  separado, nunca solo el escalar h\'ibrido.
+  \item \textbf{Contrastar} con nulo de independencia y, si es posible,
+  con surrogados que preservan bipolares (destruyen orden $\ge 3$).
+  \item \textbf{No afirmar} PID completo, causalidad, ni equivalencia
+  $\excess\Leftrightarrow\Res_{\mathrm{pair}}$.
+  \item \textbf{RECD:} $\widehat{M}_3=\excess$ sigue siendo admisible
+  como evidencia de screening en $\Delta\RECD$; la interpretaci\'on de
+  ``masa ontol\'ogica de L3'' debe leerse como masa de
+  \emph{proxy de residual}, no como masa del \'atomo PID.
+\end{enumerate}
+
+% ============================================================
+\section{Respuestas al criterio de \'exito (punto 2)}
+\label{sec:answers}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=*]
+  \item \textbf{¿Qu\'e es sinergia irreducible en t\'erminos ordinales?}\\
+  $\Res_{\mathrm{pair}}(\Jwin_t^{(w)})=\KL(\Jwin\|P^{(2)})>\theta_3$:
+  el joint de s\'imbolos no es un modelo de interacciones de orden
+  $\le 2$.
+
+  \item \textbf{¿Por qu\'e el Nivel~3 no es ``m\'as correlaci\'on''?}\\
+  Correlaci\'on / $\tau_s$ / $\Phi_1$ / $\Phi_2$ / $\TC(P^{(2)})$ viven
+  en $\Rpair$ o en observables de orden $\le 2$. L3 es el sumando
+  $\KL(P\|P^{(2)})$ de la descomposici\'on
+  $\TC(P)=\Res_{\mathrm{pair}}+\TC(P^{(2)})$ (Thm.~\ref{thm:decomp}).
+
+  \item \textbf{¿Qu\'e aporta $\excess$?}\\
+  Un proxy preespecificado y computable que (a)~se anula en independencia
+  total, (b)~detecta geometr\'ias tipo XOR v\'ia Syn, (c)~mantiene visible
+  la co-ocurrencia via Surp, (d)~no certifica $\Res_{\mathrm{pair}}>0$ cuando
+  Surp domina por pares.
+
+  \item \textbf{¿Condiciones de aparici\'on?}\\
+  Necesarias: $d\ge 3$, no-factorizaci\'on a pares.
+  Suficientes constructivas: XOR/paridad, interacci\'on log-lineal de
+  orden 3, invariante que muere en $\Rpair$.
+  En din\'amica (Feigenbaum): conjetura abierta (pto.~4).
+\end{enumerate}
+
+% ============================================================
+\section{Canon a\~nadido (C8--C14)}
+\label{sec:canon}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+  \setcounter{enumi}{7}
+  \item $\Res_{\mathrm{ind}}(P)=\TC(P)=\KL(P\|P_{\mathrm{ind}})$.
+  \item $\TC(P)=\Res_{\mathrm{pair}}(P)+\TC(P^{(2)})$ (descomposici\'on).
+  \item L3 \emph{fuerte} $:=$ $\Res_{\mathrm{pair}}>0$; L3 \emph{d\'ebil}
+  $:=$ $\Res_{\mathrm{ind}}>0$.
+  \item $\Syn$ es heur\'istica, no I-proyecci\'on a $\Rpair$.
+  \item $\Surp\ge\TC$, con igualdad solo si el information density no
+  cambia de signo; Surp no separa pares de orden 3.
+  \item $\excess>0\Rightarrow$ L3 d\'ebil; $\not\Rightarrow$ L3 fuerte.
+  \item Reportar $(\Syn,\Surp,\excess)$ por separado; surrogados que
+  preservan bipolares para testear orden $\ge 3$.
+\end{enumerate}
+
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.4pt}\\[0.5em]
+\begin{center}
+\em Fin de la Nota formal punto 2 v0.1.\\
+Pr\'oximo entregable natural: estatus de $\alpha(\lambda)$ (punto 3),
+o validaci\'on emp\'irica de Conjs.~\ref{conj:bridge}--\ref{conj:feigenbaum}.
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Padilla2026note1}
+J.~Padilla-Villanueva.
+\newblock Nota formal: Tres niveles de conjunci\'on ordinal\ldots\ (1a--1c).
+\newblock Fundaci\'on RECD, 2026.
+\bibitem{Padilla2026framework}
+J.~Padilla-Villanueva.
+\newblock Systemic Tau and the RECD Framework.
+\newblock Manuscrito de fundamentos, 2026.
+\bibitem{Watanabe1960}
+S.~Watanabe.
+\newblock Information theoretical analysis of multivariate correlation.
+\newblock \emph{IBM J.\ Res.\ Dev.} 4, 66--82 (1960).
+\bibitem{Williams2010}
+P.~L.~Williams and R.~D.~Beer.
+\newblock Nonnegative decomposition of multivariate information.
+\newblock arXiv:1004.2515 (2010).
+\bibitem{Rosas2019}
+F.~E.~Rosas et~al.
+\newblock Quantifying high-order interdependencies via multivariate
+extensions of the mutual information.
+\newblock \emph{Phys.\ Rev.\ E} 100, 032305 (2019).
+\bibitem{Csiszar}
+I.~Csisz\'ar and F.~Mat\'u\v{s}.
+\newblock Information projections revisited.
+\newblock \emph{IEEE Trans.\ Inf.\ Theory} 49, 1474--1490 (2003).
+\end{thebibliography}
+
+\end{document}

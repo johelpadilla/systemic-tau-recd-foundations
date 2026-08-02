@@ -1,0 +1,692 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\hypersetup{
+  pdftitle={Nota formal: Conjunciones ordinales y sinergia irreducible},
+  pdfauthor={Johel Padilla-Villanueva},
+  pdfkeywords={RECD, Systemic Tau, conjuncion ordinal, sinergia irreducible, excess3}
+}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{axiom}{Axioma}[section]
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposici\'on}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{conjecture}{Conjetura}[section]
+\theoremstyle{remark}
+\newtheorem{scholium}{Scholium}[section]
+
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\RECD}{\mathrm{RECD}}
+\newcommand{\TC}{\mathrm{TC}}
+\newcommand{\Syn}{\mathrm{Syn}}
+\newcommand{\Surp}{\mathrm{Surp}}
+\newcommand{\excess}{\mathrm{excess3}}
+\newcommand{\Rtwo}{\mathcal{R}_2}
+\newcommand{\Jwin}{\mathcal{J}}
+\newcommand{\claim}{\mathsf{Claim}}
+
+\title{\textbf{Nota formal}\\[0.4em]
+\large Tres niveles de conjunci\'on ordinal, anidamiento y\\
+sinergia irreducible en el marco Systemic Tau / RECD\\[0.6em]
+\normalsize (Puntos 1a--1c del roadmap te\'orico)}
+
+\author{
+Johel Padilla-Villanueva\\
+\textit{Department of Environmental Health, University of Puerto Rico}\\
+\texttt{johelpadilla@gmail.com}
+}
+
+\date{2026-08-01 \quad$\cdot$\quad v0.1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Esta nota fija el \emph{objeto matem\'atico} de las conjunciones ordinales
+en el paradigma Systemic Tau / RECD, separ\'andolo de los estimadores
+operativos ($\Phi_1$, $\Phi_2$, $\excess$) y de la ponderaci\'on del reloj
+($\alpha_\ell(\lambda)$). Se introducen tres axiomas m\'inimos de
+conjunci\'on, se definen tres \emph{claims} estructurales de profundidad
+creciente, se clarifican tres sentidos de ``anidamiento'' que no deben
+confundirse, y se caracteriza la \textbf{sinergia irreducible} (Nivel~3)
+como residuo del joint simb\'olico respecto de la clase de leyes de orden
+$\le 2$. El proxy $\excess$ queda relegado a estimador de ese residuo, no
+a su definici\'on. El resultado es un criterio n\'itido para responder:
+\emph{qu\'e es} una sinergia irreducible en t\'erminos ordinales y
+\emph{por qu\'e} el Nivel~3 no es ``m\'as correlaci\'on''.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+% ============================================================
+\section{Prop\'osito, estatus y pureza}
+\label{sec:purpose}
+
+\subsection{Qu\'e cierra esta nota}
+
+El paper de fundamentos \cite{Padilla2026framework} y la implementaci\'on
+\texttt{nested-recd} definen estimadores operativos
+$\Phi_1$, $\Phi_2$, $\excess$ y un acumulador
+\[
+\Delta\RECD(t)=\sum_{\ell=1}^{3}\alpha_\ell(\lambda)\,\Phi_\ell^\ast(t).
+\]
+All\'i el anidamiento $\Phi_3\supset\Phi_2\supset\Phi_1$ se declara
+\emph{conceptual}, y la irreductibilidad del Nivel~3 se impone
+estad\'isticamente v\'ia un proxy h\'ibrido, no por una definici\'on de
+objeto independiente del estimador.
+
+Esta nota suministra esa definici\'on. Sin ella, los puntos posteriores del
+roadmap (PID, estatus de $\alpha(\lambda)$, Feigenbaum estructural,
+invariancia) flotan sobre heur\'isticas.
+
+\subsection{Tres planos que no se colapsan}
+\label{sec:three_planes}
+
+\begin{definition}[Tres planos del formalismo]
+\label{def:planes}
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Plano de claims} (objeto te\'orico): predicados o
+  medidas abstractas $C_\ell$ / $M_\ell$ sobre la geometr\'ia relacional
+  del proceso de s\'imbolos.
+  \item \textbf{Plano de estimadores} (m\'etodo): $\Phi_1$, $\Phi_2$,
+  $\excess$, $\Phi_3=\mathbf{1}\{\excess>\theta_3\}$.
+  \item \textbf{Plano del reloj} (agregaci\'on): pesos
+  $\alpha_\ell(\lambda)$ y el incremento $\Delta\RECD$.
+\end{enumerate}
+\end{definition}
+
+\begin{scholium}[Pureza metaf\'isica]
+Ninguna definici\'on de esta nota demuestra el \emph{acto de ser}, el
+\emph{persistir} extramental, ni cierra conjeturas ontol\'ogicas de la
+Summa (M-I-1). Las conjunciones son \emph{gram\'atica formal} de
+organizaci\'on ordinal; el reloj RECD es un acumulador de esa gram\'atica,
+no una prueba del ser.
+\end{scholium}
+
+\begin{scholium}[Pureza metodol\'ogica]
+Declarar un estimador ``Nivel~3'' no implica autom\'aticamente
+irreductibilidad. Solo el Plano~(i) fija qu\'e significa irreductible;
+el Plano~(ii) estima; el Plano~(iii) pondera.
+\end{scholium}
+
+% ============================================================
+\section{Universo de discurso}
+\label{sec:universe}
+
+\begin{definition}[Trayectoria multivariante]
+Sea $d\ge 2$ y $X_t=\bigl(X_t^{(1)},\ldots,X_t^{(d)}\bigr)\in\mathbb{R}^d$
+un proceso (o una realizaci\'on muestral finita). El caso $d=1$ queda
+excluido: sin multivariante no hay conjunci\'on entre canales.
+\end{definition}
+
+\begin{definition}[Proceso de s\'imbolos Bandt--Pompe]
+\label{def:symbols}
+Fijados $m\ge 2$ y retardo $\tau\ge 1$ (defaults operativos: $m=3$,
+$\tau=1$), sea $\pi_t^{(i)}\in S_m$ el patr\'on ordinal de la coordenada
+$i$ en el vector de retardos
+$\mathbf{v}_t^{(i)}=(X_t^{(i)},X_{t+\tau}^{(i)},\ldots,X_{t+(m-1)\tau}^{(i)})$,
+con regla fija de desempate. El proceso de s\'imbolos es
+\begin{equation}
+\label{eq:S}
+S_t=\bigl(\pi_t^{(1)},\ldots,\pi_t^{(d)}\bigr)\in\Sigma^d,
+\qquad \Sigma:=S_m.
+\end{equation}
+Toda conjunci\'on de esta nota es funci\'on de $\{S_t\}$ (y de ventanas
+finitas de $\{S_t\}$), no de la escala absoluta de $X$.
+\end{definition}
+
+\begin{definition}[Ley emp\'irica en ventana]
+\label{def:J}
+Para una longitud de ventana $w\ge 2$ y un tiempo $t\ge w-1$, sea
+\begin{equation}
+\Jwin_t^{(w)}
+:=\frac{1}{w}\sum_{u=t-w+1}^{t}\delta_{S_u}
+\end{equation}
+la medida emp\'irica del joint en la ventana (con $\delta$ la masa de
+Dirac en $\Sigma^d$). Cuando el contexto es claro escribimos $\Jwin$.
+\end{definition}
+
+% ============================================================
+\section{Qu\'e es una conjunci\'on ordinal}
+\label{sec:conjunction}
+
+\subsection{Axiomas m\'inimos}
+
+\begin{axiom}[Ordinalidad]
+\label{ax:A1}
+Una conjunci\'on es invariante bajo transformaciones componente a
+componente estrictamente crecientes:
+si $Z_t^{(i)}=f_i\bigl(X_t^{(i)}\bigr)$ con cada $f_i$ estrictamente
+creciente, entonces los s\'imbolos de $Z$ coinciden con los de $X$ y
+toda conjunci\'on definida solo sobre $S$ es id\'entica.
+\end{axiom}
+
+\begin{axiom}[Relacionalidad]
+\label{ax:A2}
+Una conjunci\'on depende de relaciones entre al menos dos coordenadas
+(pares, hipergrafos o el joint), no de la din\'amica de un \'unico canal
+en aislamiento.
+\end{axiom}
+
+\begin{axiom}[Profundidad]
+\label{ax:A3}
+El \'indice de nivel $\ell\in\{1,2,3\}$ clasifica la \emph{clase de
+estructura exigida} (coincidencia; memoria relacional de pares;
+residuo de orden superior), no meramente la magnitud de un score
+escalar.
+\end{axiom}
+
+\begin{definition}[Conjunci\'on ordinal]
+\label{def:conjunction}
+Una \textbf{conjunci\'on ordinal} de nivel $\ell$ en el tiempo $t$ es un
+par $(C_\ell(t), M_\ell(t))$ donde:
+\begin{enumerate}[label=(\roman*)]
+  \item $C_\ell(t)$ es un predicado (claim binario) sobre la geometr\'ia
+  relacional de $S$ en $t$ (o en una ventana anclada en $t$);
+  \item $M_\ell(t)\ge 0$ es una medida de evidencia del claim
+  (score continuo o tasa normalizada);
+  \item el par satisface los Axiomas~\ref{ax:A1}--\ref{ax:A3}.
+\end{enumerate}
+Los estimadores $\Phi_\ell$ del paper de fundamentos son instancias del
+Plano~(ii) de $M_\ell$ (y, en el caso binario del Nivel~3, de $C_3$).
+\end{definition}
+
+\begin{remark}
+Esta definici\'on impide identificar ``conjunci\'on'' con ``cualquier
+correlaci\'on alta''. La correlaci\'on de Pearson sobre amplitudes puede
+violar A1; un indicador univariante viola A2; un umbral sobre $|\tau_s|$
+sin distinguir clase de estructura viola A3.
+\end{remark}
+
+% ============================================================
+\section{Tres claims estructurales}
+\label{sec:claims}
+
+\subsection{Nivel 1 --- Coincidencia (sincron\'ia simb\'olica instant\'anea)}
+
+\begin{definition}[Grafo de igualdad y Claim-1]
+\label{def:L1}
+El grafo de igualdad en $t$ es el grafo no dirigido $G_t^{\mathrm{eq}}$
+sobre $\{1,\ldots,d\}$ con arista $ij$ sii $\pi_t^{(i)}=\pi_t^{(j)}$.
+\begin{align}
+\label{eq:C1}
+\claim_1(t)
+&:\iff E\bigl(G_t^{\mathrm{eq}}\bigr)\ne\emptyset
+\quad\text{(o una fracci\'on m\'inima de aristas, seg\'un protocolo),}\\
+\label{eq:M1}
+M_1(t)
+&:=\Phi_1(t)
+=\frac{2}{d(d-1)}\sum_{1\le i<j\le d}
+\mathbf{1}\{\pi_t^{(i)}=\pi_t^{(j)}\}\in[0,1].
+\end{align}
+\end{definition}
+
+\begin{remark}[Tipo estructural]
+Claim-1 afirma \emph{co-ocurrencia instant\'anea de s\'imbolos}. No
+contiene memoria ni estructura de orden $>1$ m\'as all\'a de la igualdad
+simult\'anea.
+\end{remark}
+
+\subsection{Nivel 2 --- Relaci\'on persistente (memoria en el grafo de pares)}
+
+\begin{definition}[C\'odigo relacional]
+\label{def:Rcode}
+Para cada par $(i,j)$ y tiempo $t$,
+\begin{equation}
+R_t^{ij}
+=
+\begin{cases}
+\mathrm{EQ} & \text{si }\pi_t^{(i)}=\pi_t^{(j)},\\
+\mathrm{GT} & \text{si }\pi_t^{(i)}>\pi_t^{(j)},\\
+\mathrm{LT} & \text{si }\pi_t^{(i)}<\pi_t^{(j)},
+\end{cases}
+\end{equation}
+donde $>$ en $S_m$ denota un orden total fijo en el alfabeto de
+permutaciones (p.ej.\ orden lexicogr\'afico del c\'odigo entero).
+Alternativamente, el estado relacional puede tomarse como el par
+ordenado $(\pi_t^{(i)},\pi_t^{(j)})$ sin colapsar a tres c\'odigos.
+\end{definition}
+
+\begin{definition}[Persistencia y Claim-2]
+\label{def:L2}
+Fijados $p_{\min}\ge 2$ y $f_{\min}\in(0,1]$ (defaults: $4$ y $0.75$),
+el par $(i,j)$ es \emph{persistente} en $t$ si la misma relaci\'on
+$R_t^{ij}$ ocupa al menos una fracci\'on $f_{\min}$ de la ventana
+retrospectiva $\{t-p_{\min}+1,\ldots,t\}$. Entonces
+\begin{align}
+\claim_2(t)
+&:\iff \text{existe al menos un par persistente en $t$},\\
+M_2(t)
+&:=\Phi_2(t)
+=\frac{2}{d(d-1)}\sum_{i<j}
+w(R_t^{ij})\,\mathbf{1}\{\text{$(i,j)$ persistente en $t$}\},
+\end{align}
+con $w\ge 0$ (p.ej.\ $w(\mathrm{EQ})=1$, $w(\mathrm{GT})=w(\mathrm{LT})=0.85$).
+\end{definition}
+
+\begin{remark}[Tipo estructural]
+Claim-2 afirma \emph{organizaci\'on durable en el grafo de relaciones de
+pares}. A\~nade memoria y calidad relacional; sigue viviendo en
+dependencias de orden $\le 2$.
+\end{remark}
+
+\subsection{Nivel 3 --- Residuo irreducible (orden superior)}
+\label{sec:L3}
+
+Aqu\'i se fija el objeto \emph{antes} del proxy.
+
+\begin{definition}[Clase de reducciones de orden $\le 2$]
+\label{def:R2}
+Sea $\mathcal{P}(\Sigma^d)$ el simplex de probabilidades sobre
+$\Sigma^d$. La clase $\Rtwo\subset\mathcal{P}(\Sigma^d)$ consta de todas
+las leyes $Q$ que se factorizan por m\'argenes y/o dependencias de a lo
+sumo pares. Ejemplos can\'onicos (no exclusivos):
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Independencia total:}
+  $Q(s)=\prod_{i=1}^d q_i(s_i)$.
+  \item \textbf{Modelos de pares (pairwise MRF / log-lineales de orden
+  $\le 2$):}
+  $Q(s)\propto\exp\bigl(\sum_i\theta_i(s_i)+\sum_{i<j}\theta_{ij}(s_i,s_j)\bigr)$.
+  \item \textbf{Copias de marginales bipolares:}
+  cualquier $Q$ cuyas proyecciones a subconjuntos de tama\~no $\ge 3$
+  est\'en determinadas por las bipolares $\{Q_{ij}\}_{i<j}$.
+\end{enumerate}
+La elecci\'on operativa de $\Rtwo$ debe declararse en cada protocolo;
+la definici\'on de irreductibilidad es relativa a esa clase.
+\end{definition}
+
+\begin{definition}[Residuo de orden superior]
+\label{def:Res}
+Sea $D(\,\cdot\,\|\,\cdot\,)$ una divergencia no negativa que se anula
+sii sus argumentos coinciden (p.ej.\ KL, o una divergencia $f$
+estricta). El \textbf{residuo de orden superior} de $\Jwin$ respecto de
+$\Rtwo$ es
+\begin{equation}
+\label{eq:Res}
+\Res\bigl(\Jwin;\Rtwo\bigr)
+:=\inf_{Q\in\Rtwo}\, D\bigl(\Jwin\,\|\,Q\bigr)\in[0,+\infty].
+\end{equation}
+Si el \'infimo no se alcanza, se admite el \'infimo; en alfabetos finitos
+y $\Rtwo$ cerrada en topolog\'ia adecuada, el m\'inimo existe para KL bajo
+condiciones est\'andar de modelos exponenciales de pares.
+\end{definition}
+
+\begin{definition}[Claim-3: sinergia irreducible ordinal]
+\label{def:L3}
+Fijado un umbral $\theta_3\ge 0$ (posiblemente $0$ en el l\'imite
+te\'orico),
+\begin{align}
+\label{eq:C3}
+\claim_3(t)
+&:\iff \Res\bigl(\Jwin_t^{(w)};\Rtwo\bigr)>\theta_3,\\
+\label{eq:M3}
+M_3(t)
+&:=\Res\bigl(\Jwin_t^{(w)};\Rtwo\bigr).
+\end{align}
+Se dice que hay \textbf{sinergia irreducible (Nivel~3)} en $t$ cuando
+$\claim_3(t)$ es verdadero.
+\end{definition}
+
+\begin{remark}[Lectura estructural]
+Nivel~3 no afirma ``hay mucha dependencia''. Afirma: \emph{existe
+estructura en el joint simb\'olico que no puede ser reproducida por
+ninguna ley de la clase de orden $\le 2$}.
+\end{remark}
+
+\begin{definition}[Forma por proyecci\'on / invariante que muere]
+\label{def:invariant_dies}
+Sea $\Pi_2$ cualquier proyecci\'on que retiene solo informaci\'on de
+pares (p.ej.\ el mapa $\Jwin\mapsto\{Q_{ij}\}_{i<j}$ seguido de un
+m\'aximo-entrop\'ia en $\Rtwo$). Un funcional $I$ es un
+\textbf{invariante de orden superior} si
+\begin{equation}
+I(\Jwin)>0
+\quad\text{y}\quad
+I\bigl(\Pi_2(\Jwin)\bigr)=0
+\end{equation}
+para la clase de $\Jwin$ de inter\'es. Entonces $I(\Jwin)>0$ implica
+$\Res(\Jwin;\Rtwo)>0$ siempre que $I$ se anule en $\Rtwo$.
+\end{definition}
+
+Esta formulaci\'on es la v\'ia m\'as estable te\'oricamente: la sinergia
+irreducible es lo que \emph{desaparece al proyectar a pares}.
+
+% ============================================================
+\section{Anidamiento, composici\'on y dependencia}
+\label{sec:nesting}
+
+\subsection{Tres sentidos de ``anidamiento'' (no intercambiables)}
+
+\begin{definition}[Tres tipos de anidamiento]
+\label{def:nesting_types}
+\begin{enumerate}[label=(\Roman*)]
+  \item \textbf{Anidamiento l\'ogico de eventos:}
+  $\claim_3(t)\Rightarrow\claim_2(t)\Rightarrow\claim_1(t)$.
+  \item \textbf{Anidamiento informacional / de claims:}
+  el \emph{contenido estructural} exigido por el nivel $\ell{+}1$ es
+  estrictamente m\'as fuerte (no reducible al de nivel $\ell$).
+  \item \textbf{Anidamiento ontol\'ogico de reloj:}
+  el peso $\alpha_\ell(\lambda)$ asigna masa creciente a niveles m\'as
+  profundos bajo r\'egimen $\lambda$ alto (Plano~iii).
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Separaci\'on de tipos]
+\label{prop:separation}
+Con las definiciones operativas est\'andar de $\Phi_1$, $\Phi_2$ y
+$\Res$:
+\begin{enumerate}[label=(\roman*)]
+  \item El Tipo~I \textbf{no} se cumple en general:
+  puede haber $\Res>0$ sin pares persistentes, y pares persistentes sin
+  igualdad instant\'anea dominante.
+  \item El Tipo~II \textbf{s\'i} es el anidamiento can\'onico del
+  paradigma: Claim-3 $\succ$ Claim-2 $\succ$ Claim-1 como
+  \emph{exigencia estructural}.
+  \item El Tipo~III es independiente de I--II: es dise\~no (o, en el
+  punto~3 del roadmap, posible derivaci\'on) de $\alpha_\ell(\lambda)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Esbozo]
+(i)~$\Phi_1$ y $\Phi_2$ son funcionales de proyecciones de pares (con o
+sin memoria); $\Res$ puede ser positivo por dependencias de ternas aun
+cuando ninguna arista de $G_t^{\mathrm{eq}}$ sea densa y ninguna
+relaci\'on sea persistente bajo $(p_{\min},f_{\min})$. Rec\'iprocamente,
+un grafo de pares perfectamente persistente puede ser un modelo de
+pares exacto ($\Res=0$). (ii)~Por construcci\'on de
+Defs.~\ref{def:L1}--\ref{def:L3}. (iii)~Los pesos no alteran los claims.
+\end{proof}
+
+\begin{scholium}[Correcci\'on al s\'imbolo $\Phi_3\supset\Phi_2\supset\Phi_1$]
+La inclusi\'on del paper de fundamentos debe leerse como \textbf{Tipo~II}
+(anidamiento de claims), no como Tipo~I (implicaci\'on de indicadores).
+Operativamente los estimadores se calculan en paralelo y se agregan por
+\eqref{eq:drecd_ref}; la irreductibilidad se impone por $\Res$, no por
+implicaci\'on l\'ogica de $\Phi_\ell$.
+\end{scholium}
+
+\subsection{Composici\'on del reloj}
+
+\begin{definition}[Agregaci\'on RECD]
+\label{def:composition}
+\begin{equation}
+\label{eq:drecd_ref}
+\Delta\RECD(t)
+=\sum_{\ell=1}^{3}\alpha_\ell(\lambda)\, \widehat{M}_\ell(t),
+\end{equation}
+donde $\widehat{M}_\ell$ es el estimador declarado de $M_\ell$ (p.ej.\
+$\widehat{M}_1=\Phi_1$, $\widehat{M}_2=\Phi_2$,
+$\widehat{M}_3=\excess$ o $\Res$). Esto es \textbf{composici\'on
+ponderada de evidencias de claims distintos}, no uni\'on de
+subconjuntos de eventos.
+\end{definition}
+
+\subsection{Dependencias entre niveles}
+
+\begin{proposition}[Mapa de dependencias]
+\label{prop:deps}
+\begin{enumerate}[label=(\roman*)]
+  \item $\claim_1\not\Rightarrow\claim_2$ (coincidencia sin persistencia).
+  \item $\claim_2\not\Rightarrow\claim_3$ (pares persistentes con
+  $\Res=0$).
+  \item $\claim_3\Rightarrow$ ``existe estructura joint fuera de
+  $\Rtwo$'' (por definici\'on).
+  \item $\claim_3\not\Rightarrow\claim_2$ ni $\claim_1$ bajo los
+  estimadores est\'andar.
+\end{enumerate}
+Si un protocolo exige anidamiento Tipo~I, debe \emph{redise\~nar} el
+evento de Nivel~3 como
+\begin{equation}
+\label{eq:forced_nest}
+\claim_3^{\mathrm{nest}}(t)
+:\iff
+\Res\bigl(\Jwin_t^{(w)};\Rtwo\bigr)>\theta_3
+\;\wedge\;
+\claim_2(t)
+\end{equation}
+(y opcionalmente $\wedge\,\claim_1(t)$). Esa es una decisi\'on de
+dise\~no, no un teorema.
+\end{proposition}
+
+% ============================================================
+\section{Por qu\'e el Nivel~3 no es ``m\'as correlaci\'on''}
+\label{sec:not_more_corr}
+
+\begin{definition}[Familia de observables de orden $\le 2$]
+\label{def:order2_obs}
+Llamamos observables de orden $\le 2$ a cualquier funcional de
+$\{S_t\}$ que dependa solo de:
+\begin{enumerate}[label=(\alph*)]
+  \item m\'argenes univariantes y/o
+  \item leyes bipolares (incluyendo coincidencias, c\'odigos $R^{ij}$,
+  $\tau_K$ entre rangos, MI de pares, y persistencia de pares).
+\end{enumerate}
+En particular, $\Phi_1$, $\Phi_2$ y el Systemic Tau
+\[
+\tau_s(t)
+=\frac{2}{d(d-1)}\sum_{i<j}\tau_K\bigl(r^{(i)}_t,r^{(j)}_t\bigr)
+\]
+(en ventanas) son de orden $\le 2$.
+\end{definition}
+
+\begin{proposition}[Separaci\'on Nivel~3 / correlaci\'on]
+\label{prop:not_corr}
+\begin{enumerate}[label=(\roman*)]
+  \item Todo observable de orden $\le 2$ es constante en las fibras de
+  $\Pi_2$ (misma estructura de pares $\Rightarrow$ mismo valor).
+  \item $\Res(\,\cdot\,;\Rtwo)$ no es, en general, un observable de
+  orden $\le 2$: puede variar con el joint manteniendo fijas todas las
+  bipolares.
+  \item Por tanto, el Nivel~3 no es una reescala de ``m\'as
+  correlaci\'on'': es un residuo \emph{ortogonal} (en el sentido de
+  proyecci\'on a $\Rtwo$) a la familia de observables de orden $\le 2$.
+\end{enumerate}
+\end{proposition}
+
+\begin{example}[Esquema XOR ordinal]
+\label{ex:xor}
+Para $d=3$ y alfabeto adecuado, existen leyes $\Jwin$ tales que cada par
+es independiente (o casi) mientras el joint est\'a concentrado en un
+v\'inculo de tipo XOR/paridad. Entonces $\Phi_1$ y las MI de pares son
+bajas, pero $\Res>0$. Sim\'etricamente, tres canales fuertemente
+acoplados por un driver com\'un pueden tener MI de pares altas y
+$\Res\approx 0$ tras ajustar un modelo de pares.
+\end{example}
+
+\begin{scholium}
+La frase operativa correcta no es ``el Nivel~3 sube cuando hay m\'as
+sincron\'ia'', sino: ``el Nivel~3 sube cuando el joint simb\'olico se
+aleja de toda ley de orden $\le 2$''. En reg\'imenes ca\'oticos de mapas
+acoplados ambos fen\'omenos pueden co-ocurrir; eso es una predicci\'on
+emp\'irica, no la definici\'on.
+\end{scholium}
+
+% ============================================================
+\section{Estatus de excess3 respecto de Res}
+\label{sec:excess3}
+
+El paper de fundamentos usa
+\begin{equation}
+\label{eq:excess3}
+\excess(t)=0.6\,\Syn(t)+0.4\,\Surp(t),
+\end{equation}
+con
+\begin{align}
+\TC(t)
+&=\sum_{i=1}^d H\bigl(\pi^{(i)}\bigr)
+-H\bigl(\pi^{(1)},\ldots,\pi^{(d)}\bigr),\\
+\Syn(t)
+&=\bigl[\TC(t)-I_{\mathrm{pair}}(t)\bigr]_+,\\
+\Surp(t)
+&=\sum_s p_{\mathrm{obs}}(s)\,
+\bigl[\log_2 p_{\mathrm{obs}}(s)-\log_2 p_{\mathrm{ind}}(s)\bigr]_+,
+\end{align}
+estimados en ventana (pesos $0.6/0.4$ fijos \emph{a priori}).
+
+\begin{definition}[Estatus formal de $\excess$]
+\label{def:excess_status}
+$\excess$ es un \textbf{estimador-proxy} de $\Res(\Jwin;\Rtwo)$ (o de
+una cota inferior de una variante de $\Res$), \emph{no} la definici\'on
+de sinergia irreducible. En particular:
+\begin{enumerate}[label=(\roman*)]
+  \item no es un \'atomo axiom\'atico de PID completo;
+  \item la combinaci\'on lineal $0.6/0.4$ es un contrato metodol\'ogico
+  de falsabilidad, no un teorema;
+  \item $\Phi_3=\mathbf{1}\{\excess>\theta_3\}$ es un test del claim,
+  no el claim.
+\end{enumerate}
+\end{definition}
+
+\begin{conjecture}[Puente proxy--residuo; agenda del punto~2]
+\label{conj:bridge}
+Existen constantes $c,C>0$ y una subclase $\mathcal{J}_\ast$ de leyes
+emp\'iricas (p.ej.\ $d$ peque\~no, $m=3$, ventanas $w$ suficientes) tales
+que
+\begin{equation}
+c\,\Res\bigl(\Jwin;\Rtwo^{\mathrm{pair}}\bigr)
+\le \excess(\Jwin)
+\le C\bigl(\Res\bigl(\Jwin;\Rtwo^{\mathrm{ind}}\bigr)+o(1)\bigr)
+\end{equation}
+bajo hip\'otesis de concentraci\'on expl\'icitas, donde
+$\Rtwo^{\mathrm{ind}}$ es independencia total y $\Rtwo^{\mathrm{pair}}$
+es la clausura de modelos de pares. Demostrar, refinar o delimitar esta
+conjetura es el n\'ucleo del punto~2 del roadmap.
+\end{conjecture}
+
+\begin{remark}[Rutas del punto~2]
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{PID:} si un \'atomo sin\'ergico $S$ est\'a bien definido
+  sobre $\Sigma^d$, tomar $M_3:=S$ y tratar $\excess$ como proxy de $S$.
+  \item \textbf{O-information / interacciones de orden $k$:}
+  identificar $\Res$ con interacci\'on de orden $\ge 3$.
+  \item \textbf{Invariantes que mueren al proyectar:}
+  Def.~\ref{def:invariant_dies} como definici\'on primaria (recomendada).
+\end{enumerate}
+\end{remark}
+
+% ============================================================
+\section{Respuestas n\'itidas al criterio de \'exito (parcial)}
+\label{sec:answers}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=*]
+  \item \textbf{¿Qu\'e es exactamente una sinergia irreducible en
+  t\'erminos ordinales?}\\
+  Es la validez de $\claim_3$: el residuo
+  $\Res(\Jwin_t^{(w)};\Rtwo)>\theta_3$ del joint de s\'imbolos
+  Bandt--Pompe respecto de la clase de leyes de orden $\le 2$.
+  Equivalente: existencia de un invariante de orden superior que se
+  anula al proyectar a pares.
+
+  \item \textbf{¿Por qu\'e el Nivel~3 no es simplemente ``m\'as
+  correlaci\'on''?}\\
+  Porque correlaci\'on, $\tau_s$, $\Phi_1$ y $\Phi_2$ son observables de
+  orden $\le 2$ (Def.~\ref{def:order2_obs}), mientras el Nivel~3 es el
+  residuo respecto de $\Rtwo$ (Prop.~\ref{prop:not_corr}). Pueden moverse
+  en direcciones opuestas (Ej.~\ref{ex:xor}).
+
+  \item \textbf{¿Qu\'e cambia estructuralmente en las conjunciones cerca
+  de una transici\'on cr\'itica?}\\
+  \emph{A\'un no cerrado} (punto~4). Hip\'otesis de trabajo: la masa de
+  $\Res$ y la fracci\'on $f_3$ del $\Delta\RECD$ crecen al cruzar la
+  acumulaci\'on de Feigenbaum en mapas acoplados, de modo no reducible a
+  un rescaling de $|\tau_s|$. La validaci\'on sint\'etica existente es
+  evidencia, no teorema.
+
+  \item \textbf{¿Qu\'e estatus tiene la ponderaci\'on ontol\'ogica
+  $\alpha(\lambda)$?}\\
+  \emph{A\'un no cerrado} (punto~3). En el estado actual es un
+  \textbf{principio de dise\~no de r\'egimen} (Plano~iii) que eleva la
+  masa de claims profundos cuando $\lambda$ se\~nala caos/alta
+  volatilidad; no es a\'un una derivaci\'on desde un principio variacional
+  \'unico. Esta nota lo separa limpia\-mente de la definici\'on de
+  conjunci\'on.
+\end{enumerate}
+
+% ============================================================
+\section{Agenda formal residual (puntos 2--4, 5--6)}
+\label{sec:agenda}
+
+\begin{enumerate}[label=\textbf{A\arabic*.}]
+  \item \textbf{(Punto 2)} Demostrar o delimitar Conj.~\ref{conj:bridge};
+  comparar $\Res$ con \'atomos PID y O-information en $\Sigma^d$;
+  condiciones necesarias/suficientes para $\Res>0$ en mapas acoplados.
+  \item \textbf{(Punto 3)} Estatus de $\alpha(\lambda)$: ¿par\'ametro
+  fenomenol\'ogico, m\'axima entrop\'ia bajo constraints de claims,
+  estabilidad de conjunciones, o consistencia ordinal a lo largo de
+  bifurcaciones?
+  \item \textbf{(Punto 4)} Caracterizar $\Res$, $M_\ell$ y $f_\ell$ a lo
+  largo de la cascada de doblamiento de periodo: ¿qu\'e es invariante y
+  qu\'e es caracter\'istico cerca de la acumulaci\'on de Feigenbaum?
+  \item \textbf{(Punto 5)} Invariancia/covarianza de $\tau_s$ y de
+  $(M_\ell)$ bajo reordenamientos, embeddings, cambios de escala y
+  tama\~no muestral; versiones can\'onicas normalizadas.
+  \item \textbf{(Punto 6)} Formulaci\'on categ\'orica opcional: claims
+  como funtores desde la categor\'ia de procesos de s\'imbolos a
+  posets de profundidad; $\Pi_2$ como funtor de olvido.
+\end{enumerate}
+
+% ============================================================
+\section{Canon m\'inimo (para no reabrir)}
+\label{sec:canon}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+  \item Conjunci\'on $:=$ claim + medida sobre $S$, sujeta a A1--A3.
+  \item Tres planos: claim / estimador / reloj.
+  \item Nivel~3 $:=$ $\Res(\Jwin;\Rtwo)>\theta_3$, no $:=\,\excess$.
+  \item $\excess$ $:=$ proxy metodol\'ogico de $\Res$.
+  \item Anidamiento can\'onico $:=$ Tipo~II (claims), no Tipo~I
+  (indicadores), salvo redise\~no expl\'icito \eqref{eq:forced_nest}.
+  \item $\Delta\RECD$ $:=$ suma ponderada de evidencias, no uni\'on
+  conjuntista de eventos.
+  \item M-I-1: nada de lo anterior demuestra el acto de ser.
+\end{enumerate}
+
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.4pt}\\[0.5em]
+\begin{center}
+\em Fin de la Nota formal v0.1 (puntos 1a--1c).\\
+Pr\'oximo entregable natural: puente $\Res$--$\excess$ / PID (punto 2a).
+\end{center}
+
+\begin{thebibliography}{9}
+\bibitem{Padilla2026framework}
+J.~Padilla-Villanueva.
+\newblock Systemic Tau and the RECD Framework: A Relational Theory of
+Hierarchical Ordinal Conjunctions and Critical Transitions in Complex
+Systems.
+\newblock Manuscrito de fundamentos, 2026.
+\bibitem{BandtPompe2002}
+C.~Bandt and B.~Pompe.
+\newblock Permutation entropy: A natural complexity measure for time
+series.
+\newblock \emph{Phys.\ Rev.\ Lett.} 88, 174102 (2002).
+\bibitem{Williams2010}
+P.~L.~Williams and R.~D.~Beer.
+\newblock Nonnegative decomposition of multivariate information.
+\newblock arXiv:1004.2515 (2010).
+\bibitem{Lizier2014}
+J.~T.~Lizier, N.~M.~Timme, M.~Wibral, and J.~T.~Lizier.
+\newblock (Referencias PID / informaci\'on de orden superior en el
+marco de trabajo del paper de fundamentos.)
+\end{thebibliography}
+
+\end{document}

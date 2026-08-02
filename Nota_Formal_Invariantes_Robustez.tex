@@ -1,0 +1,281 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\hypersetup{
+  pdftitle={Nota formal: Invariantes y robustez de Systemic Tau},
+  pdfauthor={Johel Padilla-Villanueva}
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{remark}{Observaci\'on}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposici\'on}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[section]
+\newtheorem{conjecture}{Conjetura}[section]
+\theoremstyle{remark}
+\newtheorem{scholium}{Scholium}[section]
+
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\RECD}{\mathrm{RECD}}
+\newcommand{\TC}{\mathrm{TC}}
+\newcommand{\Syn}{\mathrm{Syn}}
+\newcommand{\Surp}{\mathrm{Surp}}
+\newcommand{\excess}{\mathrm{excess3}}
+\newcommand{\Rpair}{\mathcal{R}_{\mathrm{pair}}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\ts}{\tau_s}
+
+\title{\textbf{Nota formal}\\[0.4em]
+\large Invariantes, covarianza y robustez\\
+de Systemic Tau y de las medidas de conjunci\'on\\[0.6em]
+\normalsize (Punto 5 del roadmap; asume Notas 1--4)}
+
+\author{
+Johel Padilla-Villanueva\\
+\textit{Department of Environmental Health, University of Puerto Rico}\\
+\texttt{johelpadilla@gmail.com}
+}
+
+\date{2026-08-01 \quad$\cdot$\quad v0.1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Se clasifican las transformaciones bajo las cuales $\ts$, $\Phi_\ell$,
+$\Res_{\mathrm{pair}}$, $\excess$ y $T_{\RECD}$ son invariantes,
+covariantes de forma controlada, o inestables. Se proponen versiones
+can\'onicas / normalizadas y se discuten l\'imites asint\'oticos en $d$
+(n\'umero de variables) y $T$ (longitud / ventana). El objetivo es
+cerrar el punto~5 del roadmap: robustez te\'orica de la medida, no solo
+comportamiento en un ensamble sint\'etico fijo.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+\section{Objetos}
+\label{sec:obj}
+
+Trabajamos con: proceso $X_t\in\mathbb{R}^d$; s\'imbolos Bandt--Pompe
+$S_t\in\Sigma^d$, $\Sigma=S_m$;
+\begin{align}
+\ts(t)&=\frac{2}{d(d-1)}\sum_{i<j}\tau_K\bigl(r^{(i)}_t,r^{(j)}_t\bigr),\\
+\Phi_1,\Phi_2,&\quad
+\Res_{\mathrm{pair}},\ \excess,\quad
+\Delta\RECD=\sum_\ell\alpha_\ell(\lambda)\widehat{M}_\ell.
+\end{align}
+
+\section{Invariancias exactas}
+\label{sec:exact}
+
+\begin{theorem}[Invariancia mon\'otona componente a componente]
+\label{thm:mono}
+Si $Z_t^{(i)}=f_i\bigl(X_t^{(i)}\bigr)$ con cada $f_i$
+\emph{estrictamente creciente}, entonces:
+\begin{enumerate}[label=(\roman*)]
+  \item los s\'imbolos $S_t$ de $Z$ coinciden con los de $X$;
+  \item $\Phi_1,\Phi_2,\TC,\Res_{\mathrm{ind}},\Res_{\mathrm{pair}},
+  \excess$ (sobre $S$) son id\'enticos;
+  \item si $\ts$ se calcula sobre rangos/series ordinales equivalentes,
+  $\ts$ es id\'entico (Kendall es invariante mon\'otono por coordenada
+  cuando se aplica la misma $f_i$ a cada serie en la ventana).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Bandt--Pompe depende solo del orden relativo dentro de cada retardo;
+Kendall $\tau_K$ depende solo de concordancias de rangos.
+\end{proof}
+
+\begin{theorem}[Permutaci\'on de canales]
+\label{thm:perm}
+Si $\sigma\in S_d$ reordena coordenadas,
+$\ts$, $\Phi_\ell$, $\Res_{\mathrm{pair}}$, $\excess$ son invariantes.
+$T_{\RECD}$ tambi\'en, si $\lambda$ se construye de forma sim\'etrica en
+los canales.
+\end{theorem}
+
+\begin{theorem}[Traslaci\'on temporal]
+\label{thm:shift}
+Si $Y_t=X_{t+t_0}$, todos los funcionales de ventana se trasladan:
+$G_Y(t)=G_X(t+t_0)$. No hay preferencia de origen temporal.
+\end{theorem}
+
+\begin{proposition}[Invariancia de escala global por canal]
+\label{prop:scale}
+$X^{(i)}\mapsto a_i X^{(i)}+b_i$ con $a_i>0$ cae en
+Thm.~\ref{thm:mono}. Si alg\'un $a_i<0$ (reflexi\'on), los s\'imbolos
+Bandt--Pompe se conjugan por la inversi\'on de orden: $\Phi_1$ (igualdad
+de s\'imbolos) se preserva solo si \emph{todas} las coordenadas se
+reflejan o ninguna en un sentido compatible; en general
+\textbf{no} hay invariancia bajo reflexiones mixtas.
+\end{proposition}
+
+\section{Covariancias controladas}
+\label{sec:cov}
+
+\begin{proposition}[Cambio de embedding $(m,\tau)$]
+\label{prop:embed}
+$\Phi_\ell$ y $\Res$ viven en $\Sigma=S_m$ distinto al cambiar $m$. No
+son num\'ericamente comparables entre $m$ distintos sin renormalizaci\'on.
+Protocolo: fijar $(m,\tau)$ a priori (defaults $m=3$, $\tau=1$) o
+reportar familia indexada por $m$.
+\end{proposition}
+
+\begin{proposition}[Longitud de ventana $w$]
+\label{prop:w}
+Estimadores plug-in de entrop\'ia / $\Res$ / $\excess$ son sesgados en
+$w$ peque\~no y variables en $w$ grande (no estacionariedad). Covarianza:
+sesgo $\downarrow$ y varianza de estimaci\'on $\downarrow$ al crecer $w$
+bajo estacionariedad local; resoluci\'on temporal $\downarrow$.
+\end{proposition}
+
+\begin{proposition}[Dependencia en $d$]
+\label{prop:d}
+\begin{enumerate}[label=(\roman*)]
+  \item $\ts$ promedia $O(d^2)$ pares: concentraci\'on mejora con $d$
+  si los pares son d\'ebilmente dependientes; un par outlier se diluye.
+  \item $\Res_{\mathrm{pair}}$ en $\Sigma^d$ sufre la maldici\'on de
+  dimensionalidad: $|\Sigma|^d=(m!)^d$ crece r\'apido; para $m=3$, $d=4$
+  es factible; $d\gg 1$ exige proyecciones a subconjuntos o estimadores
+  regularizados.
+  \item $\Phi_1,\Phi_2$ normalizados por $\binom{d}{2}$ permanecen en
+  $[0,1]$ y son comparables entre $d$ si la geometr\'ia de pares es
+  homog\'enea.
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Motor $\alpha(\lambda)$]
+\label{prop:alpha_cov}
+$T_{\RECD}$ \textbf{no} es invariante bajo cambio de familia $\alpha$
+admisible (Nota~3). Solo lo son los $\widehat{M}_\ell$ crudos. Toda
+comparaci\'on de relojes entre estudios exige declarar $\alpha$ y
+$\lambda$.
+\end{proposition}
+
+\section{Versiones can\'onicas / normalizadas}
+\label{sec:canonical}
+
+\begin{definition}[Lectura can\'onica de abundancia L3]
+\label{def:can_A3}
+Reportar el triple
+\begin{equation}
+\bigl(\Syn,\ \Surp,\ \excess\bigr)
+\quad\text{y, si es factible,}\quad
+\Res_{\mathrm{pair}}=\KL(P\|P^{(2)}),
+\end{equation}
+sin reponderar. Esta es la forma can\'onica de \emph{abundancia}.
+\end{definition}
+
+\begin{definition}[Share can\'onica]
+\label{def:can_f}
+$f_\ell$ solo con motor admisible preespecificado y $\lambda$ en la
+jerarqu\'ia de fallback (Nota~3). Etiqueta:
+$f_\ell^{(\alpha,\lambda)}$.
+\end{definition}
+
+\begin{definition}[Normalizaci\'on por nulo]
+\label{def:nullnorm}
+\begin{equation}
+\Delta A_3
+:= A_3^{\mathrm{obs}}-A_3^{\mathrm{null}},
+\end{equation}
+donde el nulo es (i)~independencia (shuffle de canales) o
+(ii)~surrogados que preservan bipolares. $\Delta A_3$ es la versi\'on
+can\'onica robusta a offset de estimaci\'on.
+\end{definition}
+
+\begin{definition}[$\ts$ en bandas]
+\label{def:bands}
+Comparar regímenes por ocupaci\'on de bandas
+($|\ts|<\tau_{\mathrm{ch}}$, $\ts\ge 0.50$, etc.) adem\'as del valor
+medio: m\'as estable a monotom\'ias afines del cue.
+\end{definition}
+
+\section{Asint\'otica}
+\label{sec:asymp}
+
+\begin{conjecture}[Ley de grandes n\'umeros local]
+\label{conj:lln}
+Bajo mezcla suficientemente r\'apida del proceso $S_t$ y $w\to\infty$
+con $w=o(T)$, los estimadores plug-in de $\TC$, $\excess$ y
+$\Res_{\mathrm{pair}}$ convergen en probabilidad a sus valores
+poblacionales en la medida estacionaria (o en la media erg\'odica
+local).
+\end{conjecture}
+
+\begin{conjecture}[Concentraci\'on de $\ts$]
+\label{conj:conc_tau}
+Si los $\tau_K^{(ij)}$ son d\'ebilmente dependientes,
+$\mathrm{Var}(\ts)=O(1/d^2)+O(\rho/d)$ con $\rho$ correlaci\'on media
+entre pares; $\ts$ se concentra al crecer $d$.
+\end{conjecture}
+
+\begin{proposition}[L\'imite $d=2$]
+\label{prop:d2}
+Para $d=2$: $\Syn\equiv 0$, L3 fuerte vac\'io, $\ts=\tau_K$ del \'unico
+par, $\Phi_1\in\{0,1\}$ por tiempo. El paradigma de profundidad exige
+$d\ge 3$.
+\end{proposition}
+
+\section{Robustez pr\'actica (lista de control)}
+\label{sec:checklist}
+
+\begin{enumerate}[label=\textbf{R\arabic*.}]
+  \item Fijar $(m,\tau,w,p_{\min},f_{\min})$ a priori.
+  \item Verificar invariancia mon\'otona en un smoke test
+  ($X\mapsto\log(1+X)$, etc.).
+  \item No comparar $\excess$ entre $m$ distintos sin nota.
+  \item Para $d$ grande: L3 en subconjuntos / sketch, no joint completo.
+  \item Separar $A_3$ de $f_3^{(\alpha,\lambda)}$.
+  \item Publicar nulo bipolar adem\'as de nulo de independencia.
+  \item Si $\lambda$ falla el design goal: $\alpha\equiv 1$.
+\end{enumerate}
+
+\section{Canon a\~nadido (C29--C34)}
+\label{sec:canon}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+  \setcounter{enumi}{28}
+  \item Invariancia mon\'otona estricta por canal (Thm.~\ref{thm:mono}).
+  \item Invariancia bajo permutaci\'on de canales.
+  \item No invariancia gen\'erica bajo reflexiones mixtas ni bajo cambio
+  de $m$.
+  \item Formas can\'onicas: triple Syn/Surp/excess3; $\Delta A_3$ vs nulo;
+  $f^{(\alpha,\lambda)}$.
+  \item $d\ge 3$ para L3 fuerte; $d=2$ degenera Syn.
+  \item $T_{\RECD}$ depende del motor: no comparar relojes sin declarar
+  $\alpha,\lambda$.
+\end{enumerate}
+
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.4pt}\\[0.5em]
+\begin{center}
+\em Fin Nota formal punto 5 v0.1.
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Padilla2026note1}
+J.~Padilla-Villanueva. Notas formales 1--4. Fundaci\'on RECD, 2026.
+\bibitem{BandtPompe2002}
+C.~Bandt and B.~Pompe. Permutation entropy.
+\emph{Phys.\ Rev.\ Lett.} 88, 174102 (2002).
+\end{thebibliography}
+
+\end{document}

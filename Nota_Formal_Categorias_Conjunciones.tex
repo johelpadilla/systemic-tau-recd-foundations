@@ -1,0 +1,274 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\hypersetup{
+  pdftitle={Nota formal: Esbozo categorico de conjunciones ordinales},
+  pdfauthor={Johel Padilla-Villanueva}
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{remark}{Observaci\'on}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposici\'on}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{conjecture}{Conjetura}[section]
+\theoremstyle{remark}
+\newtheorem{scholium}{Scholium}[section]
+
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\Rpair}{\mathcal{R}_{\mathrm{pair}}}
+\newcommand{\Rind}{\mathcal{R}_{\mathrm{ind}}}
+\newcommand{\Syn}{\mathrm{Syn}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+
+\title{\textbf{Nota formal}\\[0.4em]
+\large Esbozo categ\'orico y algebraico\\
+de los niveles de conjunci\'on ordinal\\[0.6em]
+\normalsize (Punto 6 del roadmap --- opcional; asume Notas 1--2)}
+
+\author{
+Johel Padilla-Villanueva\\
+\textit{Department of Environmental Health, University of Puerto Rico}\\
+\texttt{johelpadilla@gmail.com}
+}
+
+\date{2026-08-01 \quad$\cdot$\quad v0.1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Esbozo \emph{elegante y m\'inimo} ---no un tratado de categor\'ias---
+para expresar los niveles de conjunci\'on como funtores y el Nivel~3
+como obstrucci\'on a factorizar por un funtor de olvido hacia estructuras
+de pares. El objetivo del punto~6 es elevar la claridad estructural del
+paradigma, no sustituir las Notas 1--5 ni introducir metaf\'isica.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+\section{Advertencia de oficio}
+\label{sec:warn}
+
+\begin{scholium}
+Este punto es \textbf{opcional}. Si alguna construcci\'on choca con las
+definiciones de las Notas 1--2, mandan las Notas 1--2.
+No se usa lenguaje categ\'orico para simular profundidad ontológica
+(M-I-1).
+\end{scholium}
+
+\section{Categor\'ia de procesos de s\'imbolos}
+\label{sec:cat}
+
+\begin{definition}[Categor\'ia $\mathbf{Sym}$]
+\label{def:Sym}
+\begin{itemize}
+  \item \textbf{Objetos:} procesos (o leyes) $P$ sobre $\Sigma^d$ con
+  $d\ge 1$ y $\Sigma=S_m$ fijo en un contexto, o pares
+  $(P,d,m)$.
+  \item \textbf{Morfismos:} aplicaciones que preservan la estructura
+  ordinal relevante. Ejemplos:
+  \begin{enumerate}[label=(\alph*)]
+    \item reetiquetado de canales $\sigma\in S_d$;
+    \item transformaciones mon\'otonas estrictas por canal (inducen
+    $\mathrm{id}$ en s\'imbolos);
+    \item marginaciones $P\mapsto P_A$ a $A\subset\{1,\ldots,d\}$.
+  \end{enumerate}
+\end{itemize}
+Una elecci\'on austera: morfismos $=$ permutaciones de canales +
+isometr\'ias mon\'otonas (entonces muchos morfismos son isomorfismos
+sobre $S$).
+\end{definition}
+
+\begin{definition}[Funtor de s\'imbolos]
+\label{def:BP}
+$\mathrm{BP}:\mathbf{Series}\to\mathbf{Sym}$ env\'ia trayectorias
+reales multivariantes a su proceso Bandt--Pompe. Es el puente
+``datos $\to$ objetos ordinales''.
+\end{definition}
+
+\section{Estructuras de profundidad como funtores}
+\label{sec:depth}
+
+\begin{definition}[Funtor de pares]
+\label{def:Pi2}
+$\Pi_2:\mathbf{Sym}\to\mathbf{Pair}$ env\'ia $P$ a la familia de
+bipolares $\{P_{ij}\}_{i<j}$ (o a la I-proyecci\'on $P^{(2)}\in\Rpair$).
+$\mathbf{Pair}$ es la categor\'ia de colecciones de leyes bipolares
+consistentes (o de modelos de pares).
+\end{definition}
+
+\begin{definition}[Funtor de independencia]
+\label{def:Pi1}
+$\Pi_{\mathrm{ind}}:\mathbf{Sym}\to\mathbf{Marg}$ env\'ia $P$ a
+$(P_1,\ldots,P_d)$ o a $P_{\mathrm{ind}}=\prod P_i$.
+\end{definition}
+
+\begin{proposition}[Factorizaci\'on de olvido]
+\label{prop:forget}
+Hay un tri\'angulo natural
+\begin{equation}
+\mathbf{Sym}
+\xrightarrow{\Pi_2}
+\mathbf{Pair}
+\xrightarrow{\Pi_{\mathrm{ind}}'}
+\mathbf{Marg},
+\end{equation}
+y $\Pi_{\mathrm{ind}}$ factoriza (hasta isomorfismo natural) por
+$\Pi_2$ en el sentido de que la independencia total olvida m\'as que el
+olvido a pares.
+\end{proposition}
+
+\begin{definition}[Claims como funtores valuados]
+\label{def:claims_fun}
+\begin{align}
+\mathcal{C}_1:\mathbf{Sym}&\to\mathbf{Meas},&
+&P\mapsto\Phi_1(P)\ \text{(o proceso $\Phi_1(t)$)},\\
+\mathcal{C}_2:\mathbf{Sym}&\to\mathbf{Meas},&
+&P\mapsto\Phi_2(P),\\
+\mathcal{C}_3:\mathbf{Sym}&\to\mathbf{Meas},&
+&P\mapsto\Res_{\mathrm{pair}}(P).
+\end{align}
+$\mathbf{Meas}$ es la categor\'ia de espacios de medida / $[0,\infty)$-valores
+con morfismos mon\'otonos adecuados.
+\end{definition}
+
+\begin{theorem}[L3 como obstrucci\'on al olvido]
+\label{thm:obstruction}
+$\Res_{\mathrm{pair}}(P)=0$ sii $P$ est\'a en la imagen esencial de una
+secci\'on de $\Pi_2$ (i.e., $P$ es un modelo de pares). Por tanto
+$\mathcal{C}_3(P)$ mide la \textbf{obstrucci\'on} a que $P$ descienda a
+$\mathbf{Pair}$ sin p\'erdida (en divergencia KL).
+\end{theorem}
+
+\begin{proof}
+Por definici\'on de $\Res_{\mathrm{pair}}=\inf_{Q\in\Rpair}\KL(P\|Q)$ y
+existencia de $P^{(2)}$: se anula sii $P=P^{(2)}\in\Rpair$.
+\end{proof}
+
+\begin{scholium}
+Esta es la formulaci\'on categ\'orica de ``sinergia irreducible'': no es
+un n\'umero m\'agico, es la obstrucci\'on al funtor de olvido $\Pi_2$.
+\end{scholium}
+
+\section{Poset de profundidad}
+\label{sec:poset}
+
+\begin{definition}[Poset de claims]
+\label{def:poset}
+Sea $\mathbf{D}=\{1,2,3\}$ con orden $1\prec 2\prec 3$ interpretado como
+\emph{exigencia estructural} (anidamiento Tipo~II, Nota~1), no como
+implicaci\'on de indicadores.
+Un \textbf{estado de profundidad} es un elemento de $\mathbf{D}$ o una
+distribuci\'on $(f_1,f_2,f_3)$ en el simplejo (share del reloj, Nota~3).
+\end{definition}
+
+\begin{definition}[Motor de pesos como funtor de r\'egimen]
+\label{def:weight_fun}
+Sea $\mathbf{Reg}$ la categor\'ia de cues $\lambda$ (objetos
+$\mathbb{R}_+$, morfismos mon\'otonos que preservan orden de r\'egimen).
+Un motor admisible es un funtor (o simplemente un mapa mon\'otono)
+\begin{equation}
+\alpha:\mathbf{Reg}\to\mathbb{R}_{+}^{3}
+\end{equation}
+con la monotom\'ia de profundidad de la Nota~3. El RECD es la
+composici\'on
+\begin{equation}
+(\mathcal{C}_1,\mathcal{C}_2,\mathcal{C}_3)\otimes\alpha(\lambda)
+\ \text{en el sentido de producto interno}\ 
+\sum_\ell\alpha_\ell\mathcal{C}_\ell.
+\end{equation}
+\end{definition}
+
+\section{\'Algebra de interacciones}
+\label{sec:alg}
+
+\begin{remark}[Familia exponencial]
+En la familia log-lineal
+\begin{equation}
+\log P(s)
+=\sum_i\theta_i(s_i)
++\sum_{i<j}\theta_{ij}(s_i,s_j)
++\sum_{i<j<k}\theta_{ijk}(s_i,s_j,s_k)
++\cdots,
+\end{equation}
+$\Rpair$ es el submodelo $\theta_{ijk\ldots}=0$. Los coeficientes de
+orden $\ge 3$ son el contenido algebraico de L3; $\Res_{\mathrm{pair}}$
+es una norma (KL) del residuo al proyectar esos coeficientes a cero.
+\end{remark}
+
+\begin{proposition}[Lectura algebraica de excess3]
+\label{prop:alg_excess}
+$\Syn$ es un \emph{proxy num\'erico} del tama\~no de interacciones de
+orden $\ge 3$ tras una resta heur\'istica de pares; no es el vector
+$(\theta_{ijk})$. PID intenta descomponer contribuciones de informaci\'on
+en un lattice; el esbozo categ\'orico de esta nota no reemplaza PID.
+\end{proposition}
+
+\section{Diagrama resumen}
+\label{sec:diag}
+
+\begin{center}
+\begin{tabular}{@{}c@{}}
+$\mathbf{Series}$
+\ $\xrightarrow{\mathrm{BP}}$\
+$\mathbf{Sym}$
+\ $\xrightarrow{\Pi_2}$\
+$\mathbf{Pair}$
+\ $\xrightarrow{\Pi_{\mathrm{ind}}'}$\
+$\mathbf{Marg}$\\[0.6em]
+\hspace{3.2cm}
+$\Big\downarrow \mathcal{C}_1,\mathcal{C}_2$
+\hspace{0.8cm}
+$\Big\downarrow 0$
+\hspace{1.2cm}
+$\Big\downarrow 0$\\[0.3em]
+\hspace{3.2cm}
+$\mathbf{Meas}$
+\hspace{0.3cm}
+(obstrucci\'on $\mathcal{C}_3=\Res_{\mathrm{pair}}$)
+\end{tabular}
+\end{center}
+
+\section{Canon a\~nadido (C35--C38)}
+\label{sec:canon}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+  \setcounter{enumi}{34}
+  \item $\Pi_2=$ funtor de olvido a pares; L3 $=$ obstrucci\'on a
+  $\Pi_2$ (Thm.~\ref{thm:obstruction}).
+  \item Claims $\mathcal{C}_\ell$ como funtores $\mathbf{Sym}\to\mathbf{Meas}$.
+  \item Anidamiento Tipo~II $=$ orden en el poset $\mathbf{D}=\{1\prec 2\prec 3\}$.
+  \item El lenguaje categ\'orico es opcional y subordinado a Notas 1--2.
+\end{enumerate}
+
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.4pt}\\[0.5em]
+\begin{center}
+\em Fin Nota formal punto 6 v0.1 (esbozo).\\
+Con esto se completa el arco 1--6 del roadmap te\'orico en versi\'on v0.1.
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Padilla2026note1}
+J.~Padilla-Villanueva. Notas formales 1--5. Fundaci\'on RECD, 2026.
+\bibitem{MacLane}
+S.~Mac Lane. \emph{Categories for the Working Mathematician}. Springer.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,573 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\hypersetup{
+  pdftitle={Nota formal: Feigenbaum y estructura de conjunciones},
+  pdfauthor={Johel Padilla-Villanueva}
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposici\'on}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[section]
+\newtheorem{conjecture}{Conjetura}[section]
+\theoremstyle{remark}
+\newtheorem{scholium}{Scholium}[section]
+
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\RECD}{\mathrm{RECD}}
+\newcommand{\TC}{\mathrm{TC}}
+\newcommand{\excess}{\mathrm{excess3}}
+\newcommand{\Rpair}{\mathcal{R}_{\mathrm{pair}}}
+\newcommand{\Jwin}{\mathcal{J}}
+\newcommand{\ts}{\tau_s}
+
+\title{\textbf{Nota formal}\\[0.4em]
+\large Conjunciones ordinales a lo largo de la\\
+ruta de Feigenbaum\\[0.6em]
+\normalsize (Punto 4 del roadmap; asume Notas 1--3)}
+
+\author{
+Johel Padilla-Villanueva\\
+\textit{Department of Environmental Health, University of Puerto Rico}\\
+\texttt{johelpadilla@gmail.com}
+}
+
+\date{2026-08-01 \quad$\cdot$\quad v0.2 (barrido denso $r$)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Esta nota caracteriza \emph{qu\'e cambia} en la estructura de
+conjunciones ordinales cuando un sistema multivariante atraviesa la
+cascada de doblamiento de periodo hacia el caos, en lugar de limitarse a
+afirmar que ``hay conexi\'on con Feigenbaum''. Se fija el escenario de
+mapas unimodales acoplados, se definen observables de profundidad
+(abundancia vs share), se enuncian predicciones estratificadas
+(pre-acumulaci\'on, cerca de $r_\infty$, caos desarrollado, ventanas
+peri\'odicas), y se separa lo demostrado, lo conjeturado y lo solo
+evidenciado sint\'eticamente. El contraste con EWS cl\'asicos
+(varianza, AC1) aclara qu\'e ve Systemic Tau / RECD de distinto:
+reorganizaci\'on \emph{relacional de profundidad}, no solo
+ralentizaci\'on univariante.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+\section{Canon y pregunta}
+\label{sec:q}
+
+\begin{scholium}
+Notas 1--3: claims/estimadores/reloj; L3 fuerte $:=$ $\Res_{\mathrm{pair}}$;
+$\excess$ proxy; $\alpha$ motor admisible; abundancia $\ne$ share $f_3$;
+M-I-1.
+\end{scholium}
+
+\textbf{Pregunta del punto~4:}
+¿Qu\'e cambia \emph{estructuralmente} en las conjunciones
+$(\Phi_1,\Phi_2,\Res_{\mathrm{pair}})$ en cada etapa de la cascada, y
+qu\'e de eso no capturan las medidas cl\'asicas?
+
+\section{Escenario din\'amico}
+\label{sec:scene}
+
+\begin{definition}[Familia log\'istica y acumulaci\'on]
+\label{def:logistic}
+$x\mapsto r x(1-x)$ en $[0,1]$, con cascada de doblamientos que
+acumula en $r_\infty\approx 3.56995$ y raz\'on asint\'otica
+$\delta\approx 4.6692016091$.
+\end{definition}
+
+\begin{definition}[Mapas acoplados de trabajo]
+\label{def:coupled}
+Para $d\ge 3$ y acoplamiento difusivo d\'ebil $\varepsilon>0$,
+\begin{equation}
+x_{n+1}^{(i)}
+=(1-\varepsilon)\,f_r\bigl(x_n^{(i)}\bigr)
++\frac{\varepsilon}{d-1}\sum_{j\ne i}f_r\bigl(x_n^{(j)}\bigr)
++\eta_n^{(i)},
+\end{equation}
+con $f_r$ unimodal de la clase Feigenbaum (cr\'itico cuadr\'atico) y
+$\eta$ ruido de observaci\'on peque\~no. Defaults de validaci\'on del
+paper de fundamentos: $d=4$, $\varepsilon=0.05$, $\sigma\approx 0.003$.
+\end{definition}
+
+\begin{definition}[Estaciones de la cascada]
+\label{def:stations}
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{S$_k$:} r\'egimen de periodo $2^k$ (atractor peri\'odico
+  estable de periodo $2^k$), $r\in(r_k,r_{k+1})$.
+  \item \textbf{S$_\infty^-$:} pre-acumulaci\'on, $r\uparrow r_\infty$
+  con $k$ grande.
+  \item \textbf{S$_\infty$:} vecindad de la acumulaci\'on.
+  \item \textbf{S$_{\mathrm{ch}}$:} caos desarrollado (p.ej.\ $r=3.85$
+  en la validaci\'on).
+  \item \textbf{S$_{\mathrm{win}}$:} ventanas peri\'odicas embebidas en
+  caos.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Proceso de s\'imbolos y observables]
+\label{def:obs}
+$S_t$ Bandt--Pompe como en Nota~1. Observables de ventana:
+\begin{align}
+A_1&:=\mathbb{E}[\Phi_1],&
+A_2&:=\mathbb{E}[\Phi_2],&
+A_3&:=\mathbb{E}[\Res_{\mathrm{pair}}]
+\text{ o }\mathbb{E}[\excess],\\
+\rho_3&:=\mathbb{P}(\excess>\theta_{\mathrm{hi}}),&
+\overline{\ts}&:=\mathbb{E}[|\ts|],&
+f_3&:=\mathbb{E}\bigl[\text{share L3 bajo }\alpha(\lambda)\bigr].
+\end{align}
+$A_3,\rho_3$ son \textbf{abundancia}; $f_3$ es \textbf{share}
+(Nota~3).
+\end{definition}
+
+\section{Qu\'e cambia en cada estaci\'on (predicciones)}
+\label{sec:pred}
+
+\subsection{Estructura esperada por estaci\'on}
+
+\begin{center}
+\begin{tabular}{@{}p{0.12\textwidth}p{0.28\textwidth}p{0.28\textwidth}p{0.22\textwidth}@{}}
+\toprule
+Estaci\'on & Organizaci\'on ordinal t\'ipica & Profundidad dominante & EWS cl\'asicos \\
+\midrule
+S$_k$ (bajo $k$) &
+Patrones limpios, alta coincidencia y relaciones estables &
+$\Phi_1,\Phi_2$ altos; $\Res_{\mathrm{pair}}$ bajo &
+Var/AC1 bajos tras transitorio \\
+S$_\infty^-$ &
+Periodos largos; frontera de predictibilidad local &
+$\Phi_2$ puede sostenerse; L3 empieza a crecer &
+CSD: var/AC1 $\uparrow$ al acercarse a $r_{k+1}$ \\
+S$_\infty$ &
+Mezcla de escalas; colapso de predictibilidad local &
+Reorganizaci\'on; banda $|\ts|$ inestable &
+CSD m\'aximo local; ambig\"uedad multivariante \\
+S$_{\mathrm{ch}}$ &
+Mezcla fuerte; joint no-pair &
+$A_3,\rho_3,f_3$ elevados (pred.\ central) &
+Var alta; no ve profundidad ordinal \\
+S$_{\mathrm{win}}$ &
+Retorno parcial a S$_k$-like &
+Ca\'ida parcial de $A_3$ &
+Var puede caer en ventana \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{conjecture}[Monoton\'ia gruesa pre$\to$chaos de abundancia L3]
+\label{conj:mono}
+En la clase Def.~\ref{def:coupled} con $\varepsilon$ peque\~no y $d\ge 3$,
+\begin{equation}
+\mathbb{E}\bigl[A_3\mid\mathrm{S}_{\mathrm{ch}}\bigr]
+>
+\mathbb{E}\bigl[A_3\mid\mathrm{S}_{k}\bigr]
+\end{equation}
+para $k$ acotado (p.ej.\ periodo 2 o 4) y $A_3\in\{\mathbb{E}\excess,
+\mathbb{E}\Res_{\mathrm{pair}}\}$. Compatible con la validaci\'on
+sint\'etica ($r=3.30$ vs $r=3.85$: mean excess3 $1.76\to 1.89$, highL3
+$0.50\to 0.90$, $f_3$ $0.61\to 0.87$ bajo $\lambda(r)$).
+\end{conjecture}
+
+\begin{conjecture}[No trivialidad respecto de $|\ts|$ y $\Phi_1$]
+\label{conj:nontriv}
+El incremento $A_3(\mathrm{S}_{\mathrm{ch}})-A_3(\mathrm{S}_{k})$
+\textbf{no} es una funci\'on mon\'otona fija de
+$\Delta\overline{|\ts|}$ ni de $\Delta A_1$. Existen realizaciones /
+acoplamientos donde $|\ts|$ cae y $A_3$ sube (desincronizaci\'on con
+surplus de orden 3), y el rec\'iproco en drivers comunes (Nota~2).
+\end{conjecture}
+
+\begin{conjecture}[Acumulaci\'on $r_\infty$]
+\label{conj:rinf}
+En una vecindad de $r_\infty$, la \emph{variabilidad temporal} de
+$\Res_{\mathrm{pair}}(t)$ y de $\ts(t)$ se maximiza localmente (r\'egimen
+de reorganizaci\'on), mientras que el valor medio de $A_3$ puede a\'un
+estar por debajo del plateau de caos desarrollado. Es decir: cerca de
+la acumulaci\'on domina la \textbf{inestabilidad de la geometr\'ia
+relacional}; en S$_{\mathrm{ch}}$ domina la \textbf{masa media de L3}.
+\end{conjecture}
+
+\begin{conjecture}[Doblamiento $2^k\to 2^{k+1}$]
+\label{conj:doubling}
+En cada doblamiento, el grafo de relaciones persistentes ($\Phi_2$) se
+reconfigura (cambian c\'odigos dominantes $R^{ij}$) en una escala de
+tiempo ligada al nuevo periodo, mientras $\Phi_1$ puede oscilar sin
+tendencia mon\'otona universal. El residuo $\Res_{\mathrm{pair}}$ no
+necesita saltar en cada $r_k$; su crecimiento sistem\'atico se concentra
+al acumularse la cascada y al entrar en caos.
+\end{conjecture}
+
+\section{Qu\'e ve el paradigma de distinto a EWS cl\'asicos}
+\label{sec:vs_ews}
+
+\begin{definition}[Familia EWS cl\'asica]
+\label{def:ews}
+Varianza local, autocorrelaci\'on lag-1, a veces skewness/recovery rate:
+firmas de \emph{critical slowing down} (CSD) univariante o
+semi-univariante.
+\end{definition}
+
+\begin{theorem}[Separaci\'on de objetos de medida]
+\label{thm:sep}
+\begin{enumerate}[label=(\roman*)]
+  \item EWS cl\'asicos miden propiedades de la \emph{ley marginal
+  temporal} (o de un agregado univariante) cerca de una bifurcaci\'on
+  local.
+  \item $\ts$ mide \emph{concordancia ordinal entre canales}
+  (observable de orden $\le 2$ entre series).
+  \item $(\Phi_1,\Phi_2,\Res_{\mathrm{pair}})$ miden
+  \emph{profundidad de conjunción} en el joint simb\'olico.
+  \item Por tanto, un sistema puede exhibir CSD fuerte con L3 bajo
+  (bifurcaci\'on univariante sin sinergia de orden 3), o L3 alto sin CSD
+  cl\'asico claro (caos desarrollado ya lejos del punto cr\'itico local,
+  o transici\'on relacional sin slowing univariante dominante).
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Esbozo]
+(i)--(iii) por definici\'on de los funcionales. (iv) sigue de la
+independencia formal de los argumentos: los EWS no ven $\Sigma^d$; L3
+no requiere un autovalor de Jacobiano cerca de 1.
+\end{proof}
+
+\begin{proposition}[Rol dual $\ts$ / RECD en la cascada]
+\label{prop:dual}
+\begin{enumerate}[label=(\roman*)]
+  \item $\ts$ responde: \emph{¿se reorganiza el acoplamiento ordinal
+  mutuo?}
+  \item RECD / $(A_\ell,f_\ell)$ responde: \emph{¿a qu\'e profundidad
+  se expresa esa reorganizaci\'on?}
+  \item En S$_{\mathrm{ch}}$, la predicci\'on conjunta es: posible ca\'ida
+  o volatilidad de $|\ts|$ \emph{y} subida de $A_3$ (no
+  contradictorias: orden $\le 2$ vs residuo).
+\end{enumerate}
+\end{proposition}
+
+\begin{scholium}
+Systemic Tau \textbf{no} es ``otro indicador de variance''. Detecta
+estructura relacional; el RECD anidado a\~nade el eje de
+\emph{profundidad}. Eso es lo estructuralmente distinto en la cascada.
+\end{scholium}
+
+\section{Papel de $\delta$ y de $\alpha(\lambda)$}
+\label{sec:delta}
+
+\begin{proposition}[Dos usos de $\delta$]
+\label{prop:delta_uses}
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Ancla de escala en el cue:}
+  $\kappa_\delta=1+\gamma\log\delta$ dentro de $\lambda$ (Nota~3) ---
+  continuidad con renormalización, no medici\'on de $\delta$ desde
+  series cortas.
+  \item \textbf{Teorema de reducci\'on temporal (rama legacy / Tomus II):}
+  contracci\'on $\delta^{-k}$ en construcciones de paso de tiempo a lo
+  largo de la cascada --- objeto distinto del anidado
+  $\sum\alpha_\ell\Phi_\ell$.
+\end{enumerate}
+No deben fusionarse sin scholium (M-II-4 / pureza Tomus II).
+\end{proposition}
+
+\begin{proposition}[Abundancia vs share en la cascada]
+\label{prop:ab_share}
+Con $\lambda=\lambda(r)$ mon\'otono que cumple el design goal:
+\begin{enumerate}[label=(\roman*)]
+  \item $A_3(r)$ es predicci\'on de \emph{objeto} (Notas 1--2);
+  \item $f_3(r)$ mezcla $A_3$ con $\alpha_3(\lambda(r))$ (Nota~3);
+  \item un aumento de $f_3$ con $\alpha$ admisible y $A_3$ plano a\'un
+  es solo reponderaci\'on, no nueva evidencia de sinergia.
+\end{enumerate}
+La validaci\'on sint\'etica del paper reporta ambos; la pretensi\'on
+te\'orica fuerte recae en (i).
+\end{proposition}
+
+\section{Evidencia sint\'etica existente (estatus)}
+\label{sec:evidence}
+
+\subsection{Contraste binario pre$\to$caos (paper de fundamentos)}
+
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+M\'etrica & Pre $r=3.30$ & Chaos $r=3.85$ & Estatus \\
+\midrule
+mean excess3 & $1.760\pm 0.004$ & $1.892\pm 0.006$ & Evidencia (no thm) \\
+highL3 ($>1.75$) & $0.502$ & $0.904$ & Evidencia \\
+$f_3$ (con $\lambda(r)$) & $0.613$ & $0.870$ & Evidencia + motor \\
+$\lambda_{\mathrm{emp}}$ sin calibrar & $\approx 0.181$ & $\approx 0.108$ &
+Fragilidad del cue $|\ts|$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Barrido denso de $r$ a lo largo de la cascada (v0.2)}
+\label{sec:sweep}
+
+Protocolo: $d=4$, $\varepsilon=0.05$, $\sigma=0.003$, $T=2200$ post-burn,
+$m=3$, $w=13$, $N_{\mathrm{real}}=6$ por punto, rejilla de $32$ valores de
+$r\in[3.10,3.95]$ densificada cerca de $r_\infty\approx 3.56995$.
+Software: \texttt{nested-recd} (excess3 proxy; $\Res_{\mathrm{pair}}$ con
+stride~$8$). Script: \texttt{scripts/cascade\_r\_sweep.py}.
+Figuras estables: \texttt{figures/cascade\_A3\_vs\_r.png},
+\texttt{cascade\_variability\_tau.png}, \texttt{cascade\_ews\_vs\_A3.png},
+\texttt{cascade\_phi\_f3.png}.
+
+\begin{center}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Estaci\'on (aprox.) & $r$ & excess3 & highL3 & $\Res_{\mathrm{pair}}$ &
+$|\ts|$ & var \\
+\midrule
+S$_k$ (p2) & $3.20$ & $1.754$ & $0.47$ & $0.199$ & $0.54$ & $0.021$ \\
+S$_k$ (p2) & $3.30$ & $1.758$ & $0.47$ & $0.187$ & $0.17$ & $0.025$ \\
+S$_k$ (p4) & $3.45$ & $1.964$ & $0.85$ & $0.039$ & $0.43$ & $0.040$ \\
+S$_\infty^-$ & $3.564$ & $2.373$ & $0.99$ & $\approx 0$ & $0.39$ & $0.046$ \\
+S$_\infty$ & $3.570$ & $2.343$ & $0.99$ & $\approx 0$ & $0.20$ & $0.045$ \\
+S$_{\mathrm{ch}}$ & $3.70$ & $1.945$ & $0.89$ & $0.007$ & $0.07$ & $0.050$ \\
+S$_{\mathrm{ch}}$ & $3.85$ & $1.863$ & $0.84$ & $0.008$ & $0.12$ & $0.056$ \\
+S$_{\mathrm{ch}}$ & $3.95$ & $1.899$ & $0.88$ & $0.007$ & $0.12$ & $0.080$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Lectura operativa de las conjeturas.}
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Conj.~\ref{conj:mono} (proxy excess3 / highL3):}
+  sostenida en el contraste grueso $r=3.30\to 3.85$
+  (excess3 $1.76\to 1.86$; highL3 $0.47\to 0.84$). El \emph{m\'aximo}
+  de mean excess3 en la rejilla no est\'a en caos profundo sino cerca de
+  S$_\infty^-$ ($r\approx 3.566$, excess3 $\approx 2.38$). Es decir:
+  monotonia gruesa pre$\to$chaos s\'i; plateau de caos desarrollado
+  \textbf{no} es el pico de abundancia media del proxy.
+  \item \textbf{Conj.~\ref{conj:mono} (fuerte $\Res_{\mathrm{pair}}$):}
+  con el protocolo del barrido ($w{=}13$) el residual parece m\'aximo
+  en S$_k$ de periodo bajo y $\approx 0$ en caos --- interpretaci\'on
+  \emph{provisional} del v0.2. El diagn\'ostico v0.3
+  (\S\ref{sec:resdiag}) muestra que eso es en gran parte
+  \textbf{sesgo de ventana}: con $w{=}104$ o bloque largo,
+  $\Res(r{=}3.85)\gg\Res(r{=}3.20)$ y el residual en $r_\infty$
+  permanece bajo. excess3 y $\Res_{\mathrm{pair}}$ siguen sin ser
+  intercambiables (trayectorias y sensibilidad a $w$ distintas).
+  \item \textbf{Conj.~\ref{conj:nontriv}:} sostenida.
+  $\mathrm{corr}_r(\mathrm{excess3},|\ts|)\approx 0.27$,
+  $\mathrm{corr}_r(\mathrm{excess3},\mathrm{var})\approx 0.21$;
+  en $3.30\to 3.85$, $\Delta$excess3$>0$ mientras $\Delta|\ts|$ no es
+  un rescaling mon\'otono del mismo signo a lo largo de toda la cascada.
+  \item \textbf{Conj.~\ref{conj:rinf}:} parcialmente matizada.
+  El pico de \emph{abundancia media} de excess3 est\'a en
+  S$_\infty^-$/S$_\infty$; la $\mathrm{std}_t(\mathrm{excess3})$ m\'axima
+  en la rejilla aparece algo antes ($r\approx 3.52$). El caos
+  desarrollado retiene highL3 alto pero mean excess3 intermedio.
+  \item \textbf{EWS cl\'asicos:} la varianza crece de forma m\'as
+  mon\'otona hacia $r$ alto; su forma normalizada \textbf{no} replica la
+  de excess3 (figura \texttt{cascade\_ews\_vs\_A3.png}).
+\end{enumerate}
+
+\begin{scholium}
+Los n\'umeros binarios del paper \textbf{falsan} la nula gruesa ``L3 no
+cambia pre$\to$chaos'' en excess3/highL3. El barrido denso \textbf{refina}
+Conjs.~\ref{conj:mono}--\ref{conj:rinf}: el pico de abundancia del proxy
+est\'a cerca de la acumulaci\'on, no en caos profundo.
+El diagn\'ostico de $\Res_{\mathrm{pair}}$ (\S\ref{sec:resdiag})
+\textbf{corrige} la lectura del residual fuerte: el colapso en caos
+con $w{=}13$ era sesgo; con $w$ adecuado la monotonia gruesa se
+restaura, mientras $r_\infty$ retiene residual estructuralmente bajo.
+Nada de esto es teorema en la clase Feigenbaum acoplada ni en datos
+emp\'iricos.
+\end{scholium}
+
+\begin{scholium}[Canon emp\'irico a\~nadido]
+\label{sch:emp}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+  \item Reportar siempre $A_3$ de abundancia (excess3, highL3) y, cuando
+  sea computable, $\Res_{\mathrm{pair}}$ por separado.
+  \item No identificar el m\'aximo de excess3 con ``caos m\'as
+  desarrollado'': en este ensamble el m\'aximo es pre/peri-acumulaci\'on.
+  \item Contraste cl\'asico EWS vs A3 es obligatorio en cualquier
+  validaci\'on de cascada (objetos distintos; Thm.~\ref{thm:sep}).
+  \item No interpretar $\Res_{\mathrm{pair}}(w{=}13)\approx 0$ en caos
+  como ausencia de L3 fuerte: diagnosticar con $w$ largo y bloque
+  completo (E4--E6 abajo).
+\end{enumerate}
+\end{scholium}
+
+\subsection{Diagn\'ostico del colapso de $\Res_{\mathrm{pair}}$ (v0.3)}
+\label{sec:resdiag}
+
+Protocolo (script \texttt{scripts/res\_pair\_diagnostics.py}):
+estaciones $r\in\{3.20,3.30,3.45,3.57,3.70,3.85\}$,
+$w\in\{13,26,52,104\}$, $N_{\mathrm{real}}=4$, $T=1800$,
+m\'etricas por ventana: $\Res_{\mathrm{pair}}$, sparsity
+($\#$ joints \'unicos$/w$), alfabeto, $H$, $\mathrm{TC}-\mathrm{TC}(P^{(2)})$,
+desviaci\'on final del IPF, y residual de un bloque largo
+($\sim 800$ s\'imbolos).
+
+\begin{center}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+$r$ & est. & $w{=}13$ & $w{=}26$ & $w{=}52$ & $w{=}104$ & full \\
+\midrule
+$3.20$ & S$_k$ p2 & $0.192$ & $0.317$ & $0.184$ & $0.080$ & $0.009$ \\
+$3.30$ & S$_k$ p2 & $0.181$ & $0.303$ & $0.183$ & $0.080$ & $0.009$ \\
+$3.45$ & S$_k$ p4 & $0.097$ & $0.200$ & $0.151$ & $0.069$ & $0.005$ \\
+$3.57$ & S$_\infty$ & $0.001$ & $0.005$ & $0.008$ & $0.012$ & $0.001$ \\
+$3.70$ & S$_{\mathrm{ch}}$ & $0.004$ & $0.016$ & $0.041$ & $0.062$ & $0.005$ \\
+$3.85$ & S$_{\mathrm{ch}}$ & $0.009$ & $0.150$ & $0.940$ & $1.259$ & $0.454$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Bater\'ia de hip\'otesis (veredictos operativos).}
+\begin{enumerate}[label=\textbf{H\arabic*.}]
+  \item \textbf{Sesgo de ventana (parcial, decisivo en caos).}
+  En $r=3.85$, $\Res$ pasa de $\approx 0.009$ ($w{=}13$) a
+  $\approx 1.26$ ($w{=}104$) y $\approx 0.45$ en bloque completo.
+  El ``colapso en caos'' del barrido denso con $w{=}13$ era en gran
+  parte \emph{falso negativo del estimador}. En $r_\infty$, el lift
+  es d\'ebil ($0.001\to 0.012$): all\'i el residual permanece bajo.
+  \item \textbf{Sparsity alfabetica (no como se conjetur\'o).}
+  En $w{=}13$, sparsity en S$_k$ p2 ($\approx 0.87$) es \emph{mayor}
+  que en $r_\infty$ ($\approx 0.41$). Cerca de la acumulaci\'on el
+  joint se \emph{contrae} (pocos patrones, ciclos de alto periodo
+  casi sincronizados), no se expande. La correlaci\'on
+  sparsity--$\Res$ es positiva ($\approx +0.47$), no negativa.
+  \item \textbf{Fallo de IPF (rechazado).}
+  $\mathrm{max\_dev}$ final del IPF $\ll 10^{-3}$ en todas las
+  estaciones; el colapso no es no-convergencia num\'erica.
+  \item \textbf{Pico de periodo-2 en $w{=}13$ es inflaci\'on de
+  ventana corta.} El residual asint\'otico (bloque $\sim 800$) en
+  p2 es $\approx 0.009$, del orden del de $r_\infty$. El ``pico''
+  reportado en el barrido denso era sesgo de $w$ peque\~na sobre
+  tablas joint con pocas repeticiones.
+  \item \textbf{Conj.~\ref{conj:mono} fuerte (revisada).}
+  Con $w\ge 52$ o bloque largo: $\Res(r{=}3.85)\gg\Res(r{=}3.20)$.
+  La monotonia gruesa pre$\to$chaos \emph{s\'i} se sostiene para
+  $\Res_{\mathrm{pair}}$ bajo estimaci\'on adecuada; falla solo
+  bajo el protocolo $w{=}13$ del barrido inicial.
+\end{enumerate}
+
+\begin{scholium}[Canon diagn\'ostico]
+\label{sch:resdiag}
+\begin{enumerate}[label=\textbf{E\arabic*.}]
+  \setcounter{enumi}{3}
+  \item Todo claim de ``$\Res_{\mathrm{pair}}\approx 0$'' debe
+  acompa\~narse de $w$ (o bloque) y de un chequeo de sensibilidad
+  en $w$.
+  \item Distinguir tres reg\'imenes del residual fuerte en esta
+  clase: (i)~caos desarrollado = residual alto si $w$ basta;
+  (ii)~$r_\infty$ = residual estructuralmente bajo (soporte
+  conjunto reducido y casi pairwise-explicable);
+  (iii)~periodo bajo + $w$ corto = inflaci\'on del residual.
+  \item excess3 (proxy) y $\Res_{\mathrm{pair}}$ (fuerte) siguen
+  trayectorias distintas en $r$ \emph{y} en $w$; no sustituir uno
+  por el otro en claims (refuerzo de E1).
+\end{enumerate}
+\end{scholium}
+
+Artefactos: \texttt{results/res\_pair\_diag/}, figuras
+\texttt{figures/res\_pair\_diag\_*.png}.
+
+\section{Programa de teoremas (punto 4 $\to$ agenda)}
+\label{sec:program}
+
+\begin{enumerate}[label=\textbf{T4.\arabic*.}]
+  \item Cotas de $\Res_{\mathrm{pair}}$ para productos de medidas
+  invariantes de mapas unimodales acoplados d\'ebilmente (l\'imite
+  $\varepsilon\to 0$ vs $\varepsilon>0$ fijo).
+  \item Continuidad/medida de $A_3(r)$ fuera de ventanas peri\'odicas.
+  \item Teorema de no-reducci\'on: existencia de familias donde
+  $\partial_r A_3$ no es funci\'on de $\partial_r\mathrm{Var}$ ni de
+  $\partial_r\overline{|\ts|}$.
+  \item Caracterizaci\'on de la varianza de $\Res_{\mathrm{pair}}(t)$ en
+  $r_\infty$ (Conj.~\ref{conj:rinf}).
+\end{enumerate}
+
+\section{Respuesta al criterio de \'exito}
+\label{sec:ans}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=*]
+  \item \textbf{¿Qu\'e cambia estructuralmente cerca de una transici\'on
+  cr\'itica en esta ruta?}\\
+  La geometr\'ia relacional del joint simb\'olico: de describible por
+  pares/persistencia (S$_k$) a masa creciente de residuo fuera de
+  $\Rpair$ (S$_{\mathrm{ch}}$), con zona de m\'axima
+  \emph{inestabilidad} de esa geometr\'ia cerca de $r_\infty$
+  (Conj.~\ref{conj:rinf}).
+
+  \item \textbf{¿Aparece el Nivel~3 de forma caracter\'istica cerca de
+  la acumulaci\'on?}\\
+  Hip\'otesis: s\'i como \emph{volatilidad} de L3 y de $\ts$; el
+  \emph{plateau} de abundancia media es m\'as propio del caos
+  desarrollado que del punto $r_\infty$ aislado.
+
+  \item \textbf{¿Qu\'e ve Systemic Tau de distinto?}\\
+  Eje relacional ($\ts$) + eje de profundidad
+  $(\Phi_1,\Phi_2,\Res_{\mathrm{pair}})$, duales; EWS cl\'asicos no
+  tienen eje de profundidad ordinal multivariante
+  (Thm.~\ref{thm:sep}).
+\end{enumerate}
+
+\section{Canon a\~nadido (C23--C28)}
+\label{sec:canon}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+  \setcounter{enumi}{22}
+  \item Estaciones S$_k$, S$_\infty^-$, S$_\infty$, S$_{\mathrm{ch}}$,
+  S$_{\mathrm{win}}$ para hablar de la cascada.
+  \item Predicci\'on central: $A_3(\mathrm{S}_{\mathrm{ch}})>A_3(\mathrm{S}_k)$
+  en la clase acoplada d\'ebil (conjetura + evidencia sint\'etica).
+  \item No-trivialidad: L3 no es rescaling de $|\ts|$ ni de $\Phi_1$.
+  \item Separaci\'on EWS cl\'asicos / $\ts$ / profundidad RECD
+  (Thm.~\ref{thm:sep}).
+  \item $\delta$ tiene dos usos (ancla de cue vs reducci\'on legacy);
+  no fusionar.
+  \item Reportar abundancia y share por separado a lo largo de $r$.
+\end{enumerate}
+
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.4pt}\\[0.5em]
+\begin{center}
+\em Fin Nota formal punto 4 v0.3 (barrido denso + diagn\'ostico
+$\Res_{\mathrm{pair}}$).\\
+Artefactos: \texttt{results/cascade\_sweep/},
+\texttt{results/res\_pair\_diag/}, figuras
+\texttt{cascade\_*.png}, \texttt{res\_pair\_diag\_*.png};
+software \texttt{nested-recd}.
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Padilla2026framework}
+J.~Padilla-Villanueva. Systemic Tau and the RECD Framework. 2026.
+\bibitem{Feigenbaum1978}
+M.~J.~Feigenbaum. Quantitative universality for a class of nonlinear
+transformations. \emph{J.\ Stat.\ Phys.} 19, 25--52 (1978).
+\bibitem{Kaneko1992}
+K.~Kaneko. Overview of coupled map lattices.
+\emph{Chaos} 2, 279--282 (1992).
+\end{thebibliography}
+
+\end{document}

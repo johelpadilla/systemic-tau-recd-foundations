@@ -1,0 +1,58 @@
+{
+  "title": "Systemic Tau and Hierarchical Ordinal Conjunctions: A Relational Theory of Critical Transitions",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "<p><strong>Foundations paper</strong> (English, ~30 pp.) for a dual relational account of critical transitions in complex systems.</p><p><strong>Systemic Tau</strong> (<em>&tau;<sub>s</sub></em>) is an ordinal, multivariate measure of cross-variable coupling: sliding-window Kendall-type rank concordance tracks relational coherence rather than the amplitude of any single observable.</p><p>Hierarchical <strong>ordinal conjunctions</strong> are operationalized through the <strong>Discrete Extramental Clock</strong> (RECD): three levels of structural claim&mdash;coincidence (&Phi;<sub>1</sub>), persistent relational structure (&Phi;<sub>2</sub>), and the irreducible residual beyond pairwise models (Res<sub>pair</sub>)&mdash;plus the scalable hybrid proxy excess3 (not identical to Res<sub>pair</sub>). Weighted advances use admissible aggregation weights &alpha;<sub>&ell;</sub>(&lambda;); aggregation share is distinct from abundance.</p><p>Early warning is cast as a change in hierarchical ordinal structure, not merely a rise in fluctuation size. Claims, estimators, and aggregation policy are kept on separate planes. Includes synthetic validation on coupled logistic maps and a working hypothesis for the excess3 peak near the Feigenbaum accumulation point.</p><p><em>This deposit is a new version of the previous preprint (old title: &ldquo;Systemic Tau and the RECD Framework&hellip;&rdquo;). Concept DOI remains stable; version DOI updates.</em></p><p><strong>Contents:</strong> PDF + TeX source + bibliography; key figures.</p>",
+  "creators": [
+    {
+      "name": "Padilla-Villanueva, Johel",
+      "affiliation": "Department of Environmental Health, University of Puerto Rico — Medical Sciences Campus",
+      "orcid": "0000-0002-5797-6931"
+    }
+  ],
+  "keywords": [
+    "Systemic Tau",
+    "RECD",
+    "hierarchical ordinal conjunctions",
+    "ordinal patterns",
+    "critical transitions",
+    "early warning signals",
+    "regime shifts",
+    "complex systems",
+    "Feigenbaum universality",
+    "excess3",
+    "Bandt-Pompe",
+    "relational theory"
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "publication_date": "2026-08-01",
+  "version": "1.1.0",
+  "language": "eng",
+  "communities": [
+    {
+      "identifier": "tau-sistemic"
+    }
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.21386071",
+      "relation": "isSupplementedBy",
+      "resource_type": "software",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.21385937",
+      "relation": "cites",
+      "resource_type": "publication-preprint",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://github.com/johelpadilla/nested-recd",
+      "relation": "isSupplementedBy",
+      "resource_type": "software",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Foundations manuscript (post peer-review polish). Contact: johelpadilla@gmail.com · ORCID: https://orcid.org/0000-0002-5797-6931"
+}

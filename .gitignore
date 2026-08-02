@@ -1,0 +1,27 @@
+# LaTeX build
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+
+# OS / editor
+.DS_Store
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Local bulk archive (not part of the paper package)
+Archivo.zip
+
+# Timestamped figure duplicates (keep unversioned stems)
+figures/*_2026*.png

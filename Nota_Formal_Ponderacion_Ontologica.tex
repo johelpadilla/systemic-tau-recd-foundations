@@ -1,0 +1,661 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+\hypersetup{
+  pdftitle={Nota formal: Ponderacion ontologica alpha(lambda)},
+  pdfauthor={Johel Padilla-Villanueva},
+  pdfkeywords={RECD, alpha, lambda, ponderacion ontologica, Feigenbaum}
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definici\'on}[section]
+\newtheorem{remark}{Observaci\'on}[section]
+\newtheorem{example}{Ejemplo}[section]
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposici\'on}[section]
+\newtheorem{lemma}{Lema}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{corollary}{Corolario}[section]
+\newtheorem{conjecture}{Conjetura}[section]
+\theoremstyle{remark}
+\newtheorem{scholium}{Scholium}[section]
+\newtheorem{axiom}{Axioma}[section]
+
+\newcommand{\Res}{\mathrm{Res}}
+\newcommand{\RECD}{\mathrm{RECD}}
+\newcommand{\TC}{\mathrm{TC}}
+\newcommand{\Syn}{\mathrm{Syn}}
+\newcommand{\Surp}{\mathrm{Surp}}
+\newcommand{\excess}{\mathrm{excess3}}
+\newcommand{\Rpair}{\mathcal{R}_{\mathrm{pair}}}
+\newcommand{\Jwin}{\mathcal{J}}
+
+\title{\textbf{Nota formal}\\[0.4em]
+\large Estatus de la ponderaci\'on $\alpha(\lambda)$:\\
+modulación ontológica, principios y l\'imites\\[0.6em]
+\normalsize (Punto 3 del roadmap te\'orico; asume Notas 1--2)}
+
+\author{
+Johel Padilla-Villanueva\\
+\textit{Department of Environmental Health, University of Puerto Rico}\\
+\texttt{johelpadilla@gmail.com}
+}
+
+\date{2026-08-01 \quad$\cdot$\quad v0.1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Esta nota fija el estatus formal de la \emph{ponderaci\'on ontológica}
+$\alpha_\ell(\lambda)$ en el RECD anidado. Se separan tres objetos
+($\lambda$, $\alpha_\ell$, $f_\ell$), se define con precisi\'on qu\'e
+significa ``modulación ontológica'' (y qu\'e \emph{no} significa), se
+axiomatiza el motor de pesos, y se clasifica cada pieza como
+\textbf{principio de dise\~no}, \textbf{derivable}, o \textbf{par\'ametro
+libre preespecificado}. Se exploran cuatro v\'ias de justificación m\'as
+profunda (monoton\'ia de profundidad, m\'axima entrop\'ia bajo masa de
+claims, estabilidad de conjunciones, consistencia con renormalización
+Feigenbaum) y se delimita lo que hoy \emph{no} se puede pretender
+demostrar. El resultado: $\alpha(\lambda)$ deja de ser una niebla
+retórica y pasa a ser un objeto con axiomas, grados de libertad
+explícitos y un programa de derivación parcial.
+\end{abstract}
+
+\tableofcontents
+\vspace{1em}
+
+% ============================================================
+\section{Canon heredado y pregunta del punto 3}
+\label{sec:q}
+
+\begin{scholium}
+Valen Notas 1--2: tres planos; L3 fuerte $:=$ $\Res_{\mathrm{pair}}>0$;
+$\excess$ proxy; anidamiento Tipo~II; M-I-1.
+\end{scholium}
+
+El reloj anidado es
+\begin{equation}
+\label{eq:drecd}
+\Delta\RECD(t)
+=\sum_{\ell=1}^{3}\alpha_\ell\bigl(\lambda(t)\bigr)\,
+\widehat{M}_\ell(t),
+\end{equation}
+con $\widehat{M}_1=\Phi_1$, $\widehat{M}_2=\Phi_2$,
+$\widehat{M}_3\in\{\excess,\Res_{\mathrm{pair}},\Phi_3\}$.
+
+\textbf{Pregunta del punto~3:}
+¿qu\'e es exactamente $\alpha(\lambda)$? ¿Par\'ametro fenomenológico
+ajustable, o pieza con justificación estructural?
+
+% ============================================================
+\section{Tres objetos que no se colapsan}
+\label{sec:three}
+
+\begin{definition}[Cue de r\'egimen $\lambda$]
+\label{def:lambda}
+Una funci\'on $\lambda(t)\ge 0$ (o $\lambda\in[0,1]$ tras normalizar)
+construida a partir de observables de r\'egimen---p.ej.\ $|\tau_s|$,
+espectro, RQA, par\'ametro de control $r$---con el
+\textbf{design goal}
+\begin{equation}
+\label{eq:goal}
+\mathbb{E}\bigl[\lambda\mid\mathcal{R}_{\mathrm{chaos}}\bigr]
+>
+\mathbb{E}\bigl[\lambda\mid\mathcal{R}_{\mathrm{pre}}\bigr].
+\end{equation}
+$\lambda$ \emph{no} es un claim de conjunción; es una pista de en qu\'e
+r\'egimen opera el sistema.
+\end{definition}
+
+\begin{definition}[Agenda de pesos $\alpha_\ell(\lambda)$]
+\label{def:alpha}
+Una terna de funciones
+$\alpha_\ell:[0,\infty)\to(0,\infty)$, $\ell=1,2,3$, que convierten el
+cue en coeficientes del incremento \eqref{eq:drecd}.
+\end{definition}
+
+\begin{definition}[Masa ontológica de nivel / share $f_\ell$]
+\label{def:f}
+Siempre que el denominador sea positivo,
+\begin{equation}
+\label{eq:f}
+f_\ell(t)
+:=\frac{\alpha_\ell\bigl(\lambda(t)\bigr)\,\widehat{M}_\ell(t)}
+{\sum_{k=1}^{3}\alpha_k\bigl(\lambda(t)\bigr)\,\widehat{M}_k(t)}
+\in[0,1].
+\end{equation}
+La terna $(f_1,f_2,f_3)$ es la \textbf{composici\'on} del tick RECD en $t$.
+\end{definition}
+
+\begin{proposition}[Independencia de planos]
+\label{prop:indep}
+\begin{enumerate}[label=(\roman*)]
+  \item Los claims $C_\ell$ y medidas $M_\ell$ (Notas 1--2) no dependen de
+  $\alpha$.
+  \item $\lambda$ puede calcularse sin RECD (p.ej.\ solo $\tau_s$).
+  \item $f_\ell$ mezcla \emph{evidencia de claims} ($\widehat{M}_\ell$)
+  con \emph{pol\'itica de pesos} ($\alpha_\ell$): no es un observable
+  puro del joint.
+\end{enumerate}
+\end{proposition}
+
+\begin{scholium}[Consecuencia editorial]
+La abundancia cruda de L3 ($\mathbb{E}[\excess]$, highL3,
+$\Res_{\mathrm{pair}}$) es un resultado de Nivel~3 \emph{sin} $\lambda$.
+La share $f_3$ es un resultado \emph{con} motor de pesos. Confundirlos
+es el error m\'as frecuente al leer validaciones.
+\end{scholium}
+
+% ============================================================
+\section{Qu\'e significa ``modulación ontológica''}
+\label{sec:meaning}
+
+\begin{definition}[Modulación ontológica --- sentido operativo]
+\label{def:mod}
+Llamamos \textbf{modulación ontológica} al mapa
+\begin{equation}
+\bigl(\widehat{M}_1,\widehat{M}_2,\widehat{M}_3;\lambda\bigr)
+\;\longmapsto\;
+\bigl(f_1,f_2,f_3;\,\Delta\RECD\bigr)
+\end{equation}
+inducido por $\alpha_\ell(\lambda)$. El adjetivo ``ontológica'' denota
+que el reloj no trata todos los eventos ordinales como equivalentes en
+\emph{masa de tick}: la profundidad del claim modula cu\'anto avanza el
+tiempo extramental discreto.
+\end{definition}
+
+\begin{scholium}[Lo que \emph{no} significa]
+\label{sch:not}
+\begin{enumerate}[label=(\roman*)]
+  \item No significa que el caos ``cree el ser'' ni que $\alpha$ mida el
+  \emph{actus essendi} (M-I-1).
+  \item No significa que $\lambda$ sea una variable ontológica del
+  mundo; es un cue epist\'emico/operativo de r\'egimen.
+  \item No significa que $f_3$ alto demuestre sinergia irreducible: $f_3$
+  puede subir por $\alpha_3(\lambda)$ aunque $\widehat{M}_3$ sea un proxy
+  d\'ebil (Nota~2).
+  \item No introduce un segundo reloj: es el \emph{mismo} RECD con
+  coeficientes r\'egimen-dependientes (absorción del gate legacy
+  $g(\tau_s)$, $\delta^{-k}$).
+\end{enumerate}
+\end{scholium}
+
+\begin{remark}[Intuición controlada]
+Nivel~1: eventos frecuentes, delgados (coincidencia).
+Nivel~2: memoria relacional.
+Nivel~3: residuo fuera de $\Rpair$.
+La hip\'otesis de ponderación: cerca de regímenes de alta volatilidad /
+caos desarrollado, la \emph{composici\'on} del tick se desplaza hacia
+capas m\'as profundas ($f_3\uparrow$ relativo a $f_1$).
+\end{remark}
+
+% ============================================================
+\section{Axiomas del motor de pesos}
+\label{sec:axioms}
+
+Un motor $(\lambda,\alpha)$ es \textbf{admisible} si cumple:
+
+\begin{axiom}[Positividad]
+\label{ax:pos}
+$\alpha_\ell(\lambda)>0$ para todo $\ell$ y todo $\lambda\ge 0$ en el
+dominio. Ning\'un nivel se apaga por completo (evita singularidades en
+$f_\ell$ y p\'erdida de identificabilidad).
+\end{axiom}
+
+\begin{axiom}[Monoton\'ia de profundidad]
+\label{ax:mono}
+Existen funciones mon\'otonas (no necesariamente estrictas) tales que,
+al crecer $\lambda$ en el r\'egimen de inter\'es,
+\begin{equation}
+\alpha_1(\lambda)\downarrow,\qquad
+\alpha_2(\lambda)\uparrow\text{ o se estabiliza},\qquad
+\alpha_3(\lambda)\uparrow.
+\end{equation}
+Es decir: el cue de caos/alta volatilidad \emph{no reduce} la masa
+asignable a claims m\'as profundos.
+\end{axiom}
+
+\begin{axiom}[Separación cue / claim]
+\label{ax:sep}
+$\lambda$ no se define como funci\'on exclusiva de $\widehat{M}_3$ con
+peso dominante (circularidad: reponderar L3 con L3). Si se usa un cue
+lento de L3, su peso en $\lambda$ est\'a acotado
+($w_{\mathrm{L3}}\le 0.15$ en el contrato multi-cue del paper de
+fundamentos).
+\end{axiom}
+
+\begin{axiom}[Preespecificación]
+\label{ax:pre}
+La forma de $\alpha_\ell$ y la construcci\'on de $\lambda$ se fijan
+\emph{a priori} (o en segmento de calibración etiquetado separado del
+test). No se optimizan sobre el dataset de descubrimiento de L3.
+\end{axiom}
+
+\begin{axiom}[Design goal del cue]
+\label{ax:goal}
+$\lambda$ satisface \eqref{eq:goal} en el sistema de inter\'es (tras
+polaridad $s$ o multi-cue). Si no puede verificarse, se reporta RECD
+\emph{sin} reponderar ($\alpha_\ell\equiv 1$) o se declara el fallo del
+cue.
+\end{axiom}
+
+\begin{proposition}[Template de referencia es admisible]
+\label{prop:template}
+El template del paper de fundamentos
+\begin{equation}
+\label{eq:template}
+\begin{aligned}
+\alpha_1(\lambda)&=\alpha_{10}\,e^{-\beta_1\lambda},\\
+\alpha_2(\lambda)&=\alpha_{20}\,(1+\gamma_2\lambda),\\
+\alpha_3(\lambda)&=\alpha_{30}\,(1+\gamma_3\lambda+\delta_3\lambda^2),
+\end{aligned}
+\end{equation}
+con $\alpha_{\ell 0}>0$ y $\beta_1,\gamma_2,\gamma_3,\delta_3\ge 0$,
+cumple Axiomas~\ref{ax:pos}--\ref{ax:mono}. Los Axiomas~\ref{ax:sep}--\ref{ax:goal}
+dependen de c\'omo se construya $\lambda$, no de la forma \eqref{eq:template}.
+\end{proposition}
+
+\begin{proof}
+Derivadas: $\alpha_1'=-\beta_1\alpha_1\le 0$;
+$\alpha_2'=\alpha_{20}\gamma_2\ge 0$;
+$\alpha_3'=\alpha_{30}(\gamma_3+2\delta_3\lambda)\ge 0$; positividad
+obvia.
+\end{proof}
+
+% ============================================================
+\section{Clasificaci\'on de estatus: qu\'e es cada pieza}
+\label{sec:status}
+
+\begin{definition}[Tres estatus]
+\label{def:status}
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Derivable:} se obtiene de un principio enunciado +
+  hip\'otesis, sin knobs libres esenciales.
+  \item \textbf{Principio de dise\~no:} se postula por coherencia con el
+  paradigma (axiomas), no se ``mide'' en la naturaleza.
+  \item \textbf{Par\'ametro libre preespecificado:} forma o n\'umero fijado
+  a priori por contrato metodológico; puede calibrarse en holdout, no en
+  el test de L3.
+\end{enumerate}
+\end{definition}
+
+\begin{center}
+\begin{tabular}{@{}p{0.34\textwidth}p{0.22\textwidth}p{0.36\textwidth}@{}}
+\toprule
+Pieza & Estatus actual & Comentario \\
+\midrule
+Claims $C_\ell$, $M_\ell$, $\Res_{\mathrm{pair}}$ &
+Derivable / objeto & Notas 1--2 \\
+Design goal \eqref{eq:goal} &
+Principio de dise\~no & Motor debe elevar L3 donde se espera \\
+Axiomas \ref{ax:pos}--\ref{ax:pre} &
+Principio de dise\~no & Admisibilidad del motor \\
+Forma cualitativa $\alpha_1\!\downarrow,\alpha_3\!\uparrow$ &
+Principio de dise\~no & Monoton\'ia de profundidad \\
+Template exponencial/polinomial \eqref{eq:template} &
+Par\'ametro libre preesp. & Una familia admisible, no \'unica \\
+$(\beta_1,\gamma_2,\gamma_3,\delta_3)$ &
+Par\'ametro libre preesp. & Defaults de referencia; no teorema \\
+Polaridad $s\in\{+1,-1\}$ &
+Calibración de sistema & Diagn\'ostico en etiquetas pre/chaos \\
+Factor $(1+\gamma\log\delta)$ &
+Ancla de renormalización & Continuidad con gate Feigenbaum legacy \\
+$\lambda_\tau$ solo con $|\tau_s|$ &
+Proxy de cue (fr\'agil) & Puede invertir; exige $s$ o multi-cue \\
+$\lambda(r)$ con $r$ conocido &
+Cue casi ideal & Separa r\'egimen de ruido de proxy \\
+$f_\ell$ &
+Constructo r\'egimen-aware & Hereda validez de $\lambda$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{theorem}[Estatus global de $\alpha(\lambda)$]
+\label{thm:status}
+En el estado actual del paradigma:
+\begin{enumerate}[label=(\roman*)]
+  \item $\alpha(\lambda)$ \textbf{no} es un observable del joint
+  simb\'olico ni un corolario de $\Res_{\mathrm{pair}}$.
+  \item $\alpha(\lambda)$ \textbf{es} un \emph{principio de dise\~no
+  axiomatizado} (Axiomas~\ref{ax:pos}--\ref{ax:goal}) que implementa la
+  tesis: \emph{el tiempo discreto del RECD pondera m\'as los claims m\'as
+  profundos cuando el cue de r\'egimen se\~nala caos/alta volatilidad}.
+  \item La \emph{familia concreta} \eqref{eq:template} es un
+  \textbf{representante preespecificado} del cono de motores admisibles,
+  no la \'unica funci\'on compatible con los axiomas.
+  \item Por tanto, llamar a $\alpha$ ``modulación ontológica'' es
+  leg\'itimo en el sentido operativo de Def.~\ref{def:mod}, e ileg\'itimo
+  si se lee como derivación metaf\'isica o como ley natural \'unica.
+\end{enumerate}
+\end{theorem}
+
+% ============================================================
+\section{Cuatro v\'ias hacia justificación m\'as profunda}
+\label{sec:vias}
+
+Ninguna est\'a cerrada como teorema \'unico; cada una acota grados de
+libertad.
+
+\subsection{V\'ia A --- Monoton\'ia de profundidad (ya axioma)}
+
+Es la m\'inima: Axioma~\ref{ax:mono}. No fija la forma funcional, solo el
+cono
+\[
+\mathcal{A}
+=\bigl\{\alpha:\,
+\alpha_1'\le 0,\;
+\alpha_2'\ge 0,\;
+\alpha_3'\ge 0,\;
+\alpha_\ell>0\bigr\}.
+\]
+
+\begin{proposition}
+\label{prop:cone}
+Si $\alpha,\tilde\alpha\in\mathcal{A}$ y $\lambda$ cumple
+\eqref{eq:goal}, entonces ambas elevan (en media) la share esperada de
+L3 al pasar pre$\to$chaos \emph{condicional} a $\widehat{M}_\ell$ fijos en
+ley. La magnitud del elevamiento es familia-dependiente.
+\end{proposition}
+
+\subsection{V\'ia B --- M\'axima entrop\'ia / Gibbs sobre profundidad}
+
+\begin{definition}[Pesos de Gibbs de profundidad]
+\label{def:gibbs}
+Sea $u(\ell)$ una utilidad de profundidad ($u(1)<u(2)<u(3)$) y
+$\beta(\lambda)\ge 0$ una ``inversa de temperatura'' creciente en
+$\lambda$. Def\'inase
+\begin{equation}
+\label{eq:gibbs}
+\alpha_\ell^{\mathrm{G}}(\lambda)
+\propto
+\exp\bigl(\beta(\lambda)\,u(\ell)\bigr).
+\end{equation}
+\end{definition}
+
+\begin{proposition}
+\label{prop:gibbs_adm}
+Si $\beta'(\lambda)\ge 0$ y $u(1)<u(2)<u(3)$, entonces
+$\alpha^{\mathrm{G}}$ satisface la monoton\'ia relativa
+$\alpha_3/\alpha_1=\exp\bigl(\beta(u(3)-u(1))\bigr)$ creciente en
+$\lambda$, y puede reescalarse para cumplir Axioma~\ref{ax:pos}.
+Es un motor admisible \emph{derivado} de un principio variacional
+est\'andar (m\'axima entrop\'ia bajo media de utilidad de profundidad).
+\end{proposition}
+
+\begin{remark}
+La V\'ia B \textbf{deriva la forma cualitativa} (más peso a $\ell$ alto
+cuando $\beta$ sube), pero \textbf{no deriva} $u(\ell)$ ni
+$\beta(\lambda)$ desde los datos de $S_t$ sin hip\'otesis extra. Reduce
+knobs: de cuatro exponentes a una funci\'on $\beta$ y una utilidad
+discreta de tres valores.
+\end{remark}
+
+\begin{conjecture}[Puente template $\leftrightarrow$ Gibbs]
+\label{conj:gibbs}
+Existen $u$, $\beta$ y un reescalado local tales que
+\eqref{eq:template} aproxima $\alpha^{\mathrm{G}}$ en un intervalo
+compacto de $\lambda$ con error uniformemente acotado (p.ej.\ en
+$\lambda\in[0,2]$). \'Util para reinterpretar defaults, no para
+``demostrar'' el template.
+\end{conjecture}
+
+\subsection{V\'ia C --- Estabilidad de conjunciones}
+
+Idea: $\alpha_\ell$ deber\'ia crecer con la \emph{estabilidad esperada}
+del claim $\ell$ bajo perturbaciones que preservan el r\'egimen.
+
+\begin{definition}[Estabilidad emp\'irica de nivel]
+\label{def:stab}
+Sea $\mathcal{N}$ una clase de perturbaciones (ruido de medida mon\'otono,
+jitter de ventana, surrogados que preservan m\'argenes). Def\'inase
+\begin{equation}
+\mathrm{Stab}_\ell
+:=\mathbb{E}\bigl[
+\mathrm{corr}\bigl(\widehat{M}_\ell,\,\widehat{M}_\ell\circ\mathcal{N}\bigr)
+\bigr]
+\end{equation}
+o una tasa de signo/orden preservado.
+\end{definition}
+
+\begin{conjecture}[Pesos por estabilidad relativa]
+\label{conj:stab}
+En regímenes caóticos, $\mathrm{Stab}_3/\mathrm{Stab}_1$ no colapsa a 0
+(el residuo fuerte es m\'as fr\'agil en estimación pero m\'as
+``informativo'' por evento). Una regla
+$\alpha_\ell\propto g(\mathrm{Stab}_\ell,\lambda)$ con $g$ creciente en
+ambos puede \emph{calibrar} $\alpha$ sin optimizar sobre el label de
+transici\'on. \textbf{Estado:} programa abierto; riesgo de
+circularidad si $\mathcal{N}$ se elige ad hoc.
+\end{conjecture}
+
+\subsection{V\'ia D --- Consistencia ordinal con Feigenbaum}
+
+\begin{definition}[Factor de escala Feigenbaum en el cue]
+\label{def:feig}
+Con $\delta\approx 4.6692016091$,
+\begin{equation}
+\kappa_\delta:=1+\gamma\log\delta,\qquad\gamma\ge 0,
+\end{equation}
+y $\lambda$ multiplica o incorpora $\kappa_\delta$ (template
+$\lambda_\tau$ del paper). En la rama legacy, el paso de tiempo en la
+cascada usaba $\delta^{-k}$; aqu\'i esa contracción se reinterpreta como
+\emph{aumento de masa por profundidad} cuando el cue entra en r\'egimen
+ca\'otico, no como un segundo reloj.
+\end{definition}
+
+\begin{axiom}[No contradicción con renormalización]
+\label{ax:feig}
+Si el sistema atraviesa doblamientos de periodo con acumulaci\'on en
+$r_\infty$, el motor $(\lambda,\alpha)$ no debe \emph{invertir} la
+predicci\'on de masa L3 al cruzar $r_\infty$ cuando $\lambda$ est\'a
+bien calibrado (design goal). El factor $\kappa_\delta$ es una ancla de
+continuidad con la teor\'ia de renormalización, no una demostración de
+que $\delta$ sea la causa eficiente del tick.
+\end{axiom}
+
+\begin{conjecture}[$\alpha$ a lo largo de la cascada; puente a pto.~4]
+\label{conj:cascade}
+En mapas unimodales acoplados, con $\lambda=\lambda(r)$ mon\'otono en el
+par\'ametro de control:
+\begin{enumerate}[label=(\roman*)]
+  \item $f_3(r)$ es no decreciente al pasar por la secuencia de
+  doblamientos hacia $r_\infty$ y el caos desarrollado, en media;
+  \item el salto cualitativo de composici\'on $(f_1,f_2,f_3)$ cerca de
+  $r_\infty$ no se reduce a un rescaling de $|\tau_s|$;
+  \item $\alpha_3(\lambda(r))/\alpha_1(\lambda(r))$ rastrea una
+  funci\'on mon\'otona de la ``profundidad de cascada'' (p.ej.\ $k$ en
+  periodo $2^k$ antes de $r_\infty$).
+\end{enumerate}
+\end{conjecture}
+
+% ============================================================
+\section{Construcción de $\lambda$: estatus y jerarqu\'ia}
+\label{sec:lambda_build}
+
+\begin{definition}[Jerarqu\'ia de fallback (canon operativo)]
+\label{def:fallback}
+\begin{enumerate}[label=(\arabic*)]
+  \item $\lambda=\lambda(r)$ mon\'otono si hay control ground-truth.
+  \item $\lambda_{\mathrm{multi}}$ (consenso $\tau$ + espectro + RQA;
+  $w_{\mathrm{L3}}\le 0.15$ opcional).
+  \item $\lambda_\tau$ con polaridad $s$ diagnosticada en holdout
+  etiquetado, solo si se verifica \eqref{eq:goal}.
+  \item $\alpha_\ell\equiv 1$ (RECD sin reponderar) si no hay cue
+  fiable.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Fragilidad del cue $|\tau_s|$ puro]
+\label{thm:fragile}
+No es teorema que $|\tau_s|$ sea mon\'otono con el caos en toda clase de
+sistemas. Existen acoplamientos (p.ej.\ log\'isticos del paper de
+fundamentos) donde $\overline{|\tau_s|}_{\mathrm{pre}}>\overline{|\tau_s|}_{\mathrm{chaos}}$.
+Por tanto $s$ o multi-cue son \textbf{parte del estatus formal} de
+$\lambda$, no detalles de implementaci\'on.
+\end{theorem}
+
+\begin{proposition}[Polaridad como isometr\'ia de r\'egimen]
+\label{prop:polarity}
+El mapa $s\cdot g(|\tau_s|)$ con $s\in\{+1,-1\}$ es la corrección
+m\'inima que restaura \eqref{eq:goal} cuando el orden pre/chaos de
+$|\tau_s|$ se invierte. No altera los claims $M_\ell$.
+\end{proposition}
+
+% ============================================================
+\section{Qu\'e se conserva y qu\'e se pierde al ponderar}
+\label{sec:conserve}
+
+\begin{proposition}[Invariantes bajo $\alpha$]
+\label{prop:inv_alpha}
+\begin{enumerate}[label=(\roman*)]
+  \item $\widehat{M}_\ell(t)$ y $\Res_{\mathrm{pair}}(\Jwin_t)$ son
+  invariantes bajo cambio de $\alpha$ (Plano claim/estimador).
+  \item El signo de $\Delta\tau_s$ y las bandas de $\tau_s$ no dependen
+  de $\alpha$.
+  \item La ordenaci\'on de dos trayectorias por $T_{\RECD}$ \emph{puede}
+  cambiar al cambiar $\alpha$ (la ponderación altera el reloj
+  acumulado).
+\end{enumerate}
+\end{proposition}
+
+\begin{proposition}[Identificabilidad]
+\label{prop:id}
+Si $\widehat{M}_\ell$ son linealmente dependientes en una ventana, $f_\ell$
+no identifica $\alpha$ de forma \'unica. En particular, reportar solo
+$f_3$ sin $(\widehat{M}_\ell,\lambda,\alpha)$ es subidentificado.
+\end{proposition}
+
+\begin{scholium}[Norma de reporte]
+Todo resultado que invoque ``masa ontológica'' debe publicar:
+(1)~$\widehat{M}_\ell$ crudos; (2)~construcci\'on de $\lambda$ y
+verificación de \eqref{eq:goal}; (3)~$\alpha_\ell$ usados;
+(4)~$f_\ell$ como derivado. Sin (1)--(2), $f_3$ no es interpretable.
+\end{scholium}
+
+% ============================================================
+\section{Respuesta n\'itida a la pregunta del roadmap}
+\label{sec:answer}
+
+\begin{enumerate}[label=\textbf{Q\arabic*.}, leftmargin=*]
+  \item \textbf{¿Qu\'e significa ``modulación ontológica''?}\\
+  El mapa operativo
+  $(\widehat{M},\lambda)\mapsto(f,\Delta\RECD)$: la profundidad del claim
+  modula la masa del tick del reloj extramental discreto
+  (Def.~\ref{def:mod}). No es metaf\'isica del ser
+  (Scholium~\ref{sch:not}).
+
+  \item \textbf{¿Es $\alpha(\lambda)$ fenomenológico o estructural?}\\
+  \textbf{Ambos, en capas:}
+  \begin{itemize}
+    \item \emph{Estructural / de principio:} axiomas de admisibilidad y
+    monoton\'ia de profundidad (el reloj \emph{debe} poder elevar L3
+    cuando el r\'egimen lo exige).
+    \item \emph{Fenomenológico / preespecificado:} la forma concreta
+    \eqref{eq:template} y sus coeficientes num\'ericos.
+    \item \emph{Parcialmente derivable:} V\'ia B (Gibbs/m\'axent sobre
+    profundidad) y ancla Feigenbaum $\kappa_\delta$ reducen libertad
+    sin cerrar un teorema \'unico.
+  \end{itemize}
+
+  \item \textbf{¿Puede derivarse de un principio m\'as profundo?}\\
+  Hoy: \textbf{derivación parcial} (cono $\mathcal{A}$, Gibbs,
+  design goal, no-contradicción Feigenbaum). No hay a\'un un principio
+  \'unico que fije $\alpha_1,\alpha_2,\alpha_3$ sin knobs. Las Conjs.\
+  \ref{conj:gibbs}--\ref{conj:cascade} marcan el programa.
+
+  \item \textbf{¿C\'omo cambia $\alpha(\lambda)$ en la ruta de
+  Feigenbaum?}\\
+  Si $\lambda=\lambda(r)$ mon\'otono, $\alpha_3/\alpha_1$ crece hacia y
+  m\'as all\'a de $r_\infty$ por construcci\'on del template admisible.
+  Que $f_3$ y $\Res_{\mathrm{pair}}$ hagan lo mismo de forma no trivial
+  es la Conj.~\ref{conj:cascade} (punto~4).
+\end{enumerate}
+
+% ============================================================
+\section{Canon a\~nadido (C15--C22)}
+\label{sec:canon}
+
+\begin{enumerate}[label=\textbf{C\arabic*.}]
+  \setcounter{enumi}{14}
+  \item Separar siempre $\lambda$, $\alpha_\ell$, $f_\ell$.
+  \item Modulación ontológica $:=$ Def.~\ref{def:mod} (operativa).
+  \item Motor admisible $:=$ Axiomas~\ref{ax:pos}--\ref{ax:goal}.
+  \item $\alpha(\lambda)$ es principio de dise\~no axiomatizado + familia
+  preespecificada; no es observable del joint.
+  \item Abundancia L3 (cruda) $\ne$ share $f_3$ (reponderada).
+  \item Fallback de $\lambda$: $r$ $\to$ multi-cue $\to$ $\lambda_\tau$
+  calibrado $\to$ $\alpha\equiv 1$.
+  \item Polaridad $s$ es parte del estatus formal del cue $|\tau_s|$.
+  \item Norma de reporte: $(\widehat{M}_\ell,\lambda,\alpha,f_\ell)$.
+\end{enumerate}
+
+\subsection{Implementaci\'on emp\'irica V\'ia B (v0.2)}
+\label{sec:gibbs_emp}
+
+Software: \texttt{nested-recd} $\ge 0.2.2$ expone
+\texttt{alpha\_weights\_gibbs} y
+\texttt{alpha\_compare\_template\_gibbs}.
+Script: \texttt{scripts/gibbs\_alpha\_compare.py}.
+Defaults: $u=(0,1,2)$, $\beta(\lambda)=\kappa\lambda$ con $\kappa=1.5$.
+
+\paragraph{Puente de forma (Conj.~\ref{conj:gibbs}).}
+Sobre $\lambda\in[0,2]$, familias L1-normalizadas:
+$\max L_\infty\approx 0.163$, $\max L_1\approx 0.326$,
+$\mathrm{mean}\,L_1\approx 0.215$. Aproximaci\'on de forma
+\emph{acotada}, no identidad.
+
+\paragraph{Share $f_3$ en la cascada (misma masa $\Phi$).}
+Estaciones $r\in\{3.20,\ldots,3.85\}$, $N_{\mathrm{real}}=4$:
+$\mathrm{corr}_r(f_3^{\mathrm{T}},f_3^{\mathrm{G}})\approx 0.997$
+(ambos motores empujan el share de L3 en el mismo sentido cualitativo);
+$\mathrm{corr}_r(f_3^{\mathrm{T}},\mathrm{excess3})\approx 0.08$
+--- refuerzo emp\'irico de \textbf{abundancia $\ne$ share}.
+En $r\le r_\infty$ el proxy $\lambda(r)=0$ deja ambos motores en el
+baseline; en caos desarrollado ($r=3.85$) Gibbs eleva levemente
+$f_3$ ($0.926$ vs $0.884$ template).
+
+\begin{scholium}
+La V\'ia B est\'a implementada y es intercambiable \emph{cualitativamente}
+con el template en esta rejilla; no sustituye la preespecificaci\'on
+ni convierte $\alpha$ en observable del joint.
+\end{scholium}
+
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.4pt}\\[0.5em]
+\begin{center}
+\em Fin de la Nota formal punto 3 v0.2
+(V\'ia B implementada + puente emp\'irico).\\
+Artefactos: \texttt{results/gibbs\_alpha/},
+\texttt{figures/gibbs\_*.png}; software \texttt{nested-recd} 0.2.2.
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Padilla2026note1}
+J.~Padilla-Villanueva.
+\newblock Nota formal 1: Conjunciones ordinales\ldots
+\newblock Fundaci\'on RECD, 2026.
+\bibitem{Padilla2026note2}
+J.~Padilla-Villanueva.
+\newblock Nota formal 2: Sinergia irreducible\ldots
+\newblock Fundaci\'on RECD, 2026.
+\bibitem{Padilla2026framework}
+J.~Padilla-Villanueva.
+\newblock Systemic Tau and the RECD Framework.
+\newblock Manuscrito de fundamentos, 2026.
+\end{thebibliography}
+
+\end{document}
