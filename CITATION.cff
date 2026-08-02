@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+title: "Systemic Tau and Hierarchical Ordinal Conjunctions: A Relational Theory of Critical Transitions"
+authors:
+  - family-names: Padilla-Villanueva
+    given-names: Johel
+    orcid: "https://orcid.org/0000-0002-5797-6931"
+    affiliation: "Department of Environmental Health, University of Puerto Rico — Medical Sciences Campus"
+version: "1.1.0"
+date-released: "2026-08-01"
+license: CC-BY-4.0
+doi: "10.5281/zenodo.21753540"
+url: "https://doi.org/10.5281/zenodo.21753540"
+repository-code: "https://github.com/johelpadilla/systemic-tau-recd-foundations"
+type: article
+keywords:
+  - Systemic Tau
+  - RECD
+  - hierarchical ordinal conjunctions
+  - critical transitions
+  - early warning signals
+  - ordinal patterns
+  - complex systems
+abstract: >
+  Foundations paper for a dual relational account of critical transitions:
+  Systemic Tau (ordinal multivariate coupling) and hierarchical ordinal
+  conjunctions operationalized through the Discrete Extramental Clock (RECD).
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21753540"
+    description: Version DOI (v1.1.0)
+  - type: doi
+    value: "10.5281/zenodo.21287251"
+    description: Concept DOI (all versions)

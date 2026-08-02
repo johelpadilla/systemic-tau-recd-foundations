@@ -52,6 +52,12 @@
       "relation": "isSupplementedBy",
       "resource_type": "software",
       "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/johelpadilla/systemic-tau-recd-foundations",
+      "relation": "isIdenticalTo",
+      "resource_type": "publication-preprint",
+      "scheme": "url"
     }
   ],
   "notes": "Foundations manuscript (post peer-review polish). Contact: johelpadilla@gmail.com · ORCID: https://orcid.org/0000-0002-5797-6931"
