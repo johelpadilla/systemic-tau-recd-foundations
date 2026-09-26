@@ -35,7 +35,7 @@ The PDF title page carries a footnote with the version DOI, concept DOI, and rep
 
 En nested-recd ≤ 0.2.2, `np.unique` sobre listas de tuplas aplanaba los símbolos. `Syn`, `excess3` y `highL3` de la cascada con cuatro mapas usaban ese conteo. `Res_pair` no. La versión 0.2.3 cuenta tuplas conjuntas: [10.5281/zenodo.22970079](https://doi.org/10.5281/zenodo.22970079).
 
-Con ese conteo, en la corrida `cascade_agg_20260925_215318`, excess³ pasa de 2.210 en `r = 3.30` a 2.802 en `r = 3.85`, y el máximo de la rejilla de 32 puntos está en `r = 3.95` (2.897). `highL3` con umbral 1.75 queda en 0.994 en ambos extremos. Las cifras 1.76 → 1.89 y el pico junto a la acumulación son el conteo agrupado. El PDF depositado en [10.5281/zenodo.21753560](https://doi.org/10.5281/zenodo.21753560) conserva esas cifras; la fe de erratas va en una versión nueva del mismo concepto. El manuscrito enviado a AIP Advances no se reescribe aquí.
+Con ese conteo, en la corrida `cascade_agg_20260925_215318`, excess³ pasa de 2.210 en `r = 3.30` a 2.802 en `r = 3.85`, y el máximo de la rejilla de 32 puntos está en `r = 3.95` (2.897). `highL3` con umbral 1.75 queda en 0.994 en ambos extremos. Las cifras 1.76 → 1.89 y el pico junto a la acumulación son el conteo agrupado. El PDF de la versión 1.1.1 sigue en [10.5281/zenodo.21753560](https://doi.org/10.5281/zenodo.21753560). La fe de erratas es la versión 1.1.2 del mismo concepto: [10.5281/zenodo.22970130](https://doi.org/10.5281/zenodo.22970130). El manuscrito enviado a AIP Advances no se reescribe aquí.
 
 ## Lectura rápida
 
