@@ -187,8 +187,13 @@ En la clase Def.~\ref{def:coupled} con $\varepsilon$ peque\~no y $d\ge 3$,
 \end{equation}
 para $k$ acotado (p.ej.\ periodo 2 o 4) y $A_3\in\{\mathbb{E}\excess,
 \mathbb{E}\Res_{\mathrm{pair}}\}$. Compatible con la validaci\'on
-sint\'etica ($r=3.30$ vs $r=3.85$: mean excess3 $1.76\to 1.89$, highL3
-$0.50\to 0.90$, $f_3$ $0.61\to 0.87$ bajo $\lambda(r)$).
+sint\'etica con el conteo por tuplas de nested-recd 0.2.3
+($r=3.30$ vs $r=3.85$: mean excess3 $2.210\to 2.802$, highL3
+$0.994\to 0.995$, $f_3$ $0.623\to 0.885$ bajo $\lambda(r)$;
+corrida \texttt{cascade\_sweep/cascade\_agg\_20260925\_215318}).
+El conteo agrupado de las versiones $\le 0.2.2$ daba
+$1.76\to 1.89$ y highL3 $0.50\to 0.90$. Con el umbral $1.75$,
+highL3 queda saturado en casi toda la rejilla corregida.
 \end{conjecture}
 
 \begin{conjecture}[No trivialidad respecto de $|\ts|$ y $\Phi_1$]
@@ -313,9 +318,9 @@ te\'orica fuerte recae en (i).
 \toprule
 M\'etrica & Pre $r=3.30$ & Chaos $r=3.85$ & Estatus \\
 \midrule
-mean excess3 & $1.760\pm 0.004$ & $1.892\pm 0.006$ & Evidencia (no thm) \\
-highL3 ($>1.75$) & $0.502$ & $0.904$ & Evidencia \\
-$f_3$ (con $\lambda(r)$) & $0.613$ & $0.870$ & Evidencia + motor \\
+mean excess3 & $2.210\pm 0.002$ & $2.802\pm 0.004$ & Evidencia (no thm); conteo 0.2.3 \\
+highL3 ($>1.75$) & $0.994$ & $0.995$ & Umbral saturado \\
+$f_3$ (con $\lambda(r)$) & $0.623$ & $0.885$ & Evidencia + motor \\
 $\lambda_{\mathrm{emp}}$ sin calibrar & $\approx 0.181$ & $\approx 0.108$ &
 Fragilidad del cue $|\ts|$ \\
 \bottomrule
@@ -341,14 +346,14 @@ Figuras estables: \texttt{figures/cascade\_A3\_vs\_r.png},
 Estaci\'on (aprox.) & $r$ & excess3 & highL3 & $\Res_{\mathrm{pair}}$ &
 $|\ts|$ & var \\
 \midrule
-S$_k$ (p2) & $3.20$ & $1.754$ & $0.47$ & $0.199$ & $0.54$ & $0.021$ \\
-S$_k$ (p2) & $3.30$ & $1.758$ & $0.47$ & $0.187$ & $0.17$ & $0.025$ \\
-S$_k$ (p4) & $3.45$ & $1.964$ & $0.85$ & $0.039$ & $0.43$ & $0.040$ \\
-S$_\infty^-$ & $3.564$ & $2.373$ & $0.99$ & $\approx 0$ & $0.39$ & $0.046$ \\
-S$_\infty$ & $3.570$ & $2.343$ & $0.99$ & $\approx 0$ & $0.20$ & $0.045$ \\
-S$_{\mathrm{ch}}$ & $3.70$ & $1.945$ & $0.89$ & $0.007$ & $0.07$ & $0.050$ \\
-S$_{\mathrm{ch}}$ & $3.85$ & $1.863$ & $0.84$ & $0.008$ & $0.12$ & $0.056$ \\
-S$_{\mathrm{ch}}$ & $3.95$ & $1.899$ & $0.88$ & $0.007$ & $0.12$ & $0.080$ \\
+S$_k$ (p2) & $3.20$ & $2.210$ & $0.993$ & $0.199$ & $0.54$ & $0.021$ \\
+S$_k$ (p2) & $3.30$ & $2.210$ & $0.994$ & $0.187$ & $0.17$ & $0.025$ \\
+S$_k$ (p4) & $3.45$ & $2.280$ & $0.995$ & $0.039$ & $0.43$ & $0.040$ \\
+S$_\infty^-$ & $3.564$ & $2.382$ & $0.995$ & $\approx 0$ & $0.39$ & $0.046$ \\
+S$_\infty$ & $3.570$ & $2.375$ & $0.995$ & $\approx 0$ & $0.20$ & $0.045$ \\
+S$_{\mathrm{ch}}$ & $3.70$ & $2.276$ & $0.995$ & $0.007$ & $0.07$ & $0.050$ \\
+S$_{\mathrm{ch}}$ & $3.85$ & $2.802$ & $0.995$ & $0.008$ & $0.12$ & $0.056$ \\
+S$_{\mathrm{ch}}$ & $3.95$ & $2.897$ & $0.995$ & $0.007$ & $0.12$ & $0.080$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -357,11 +362,12 @@ S$_{\mathrm{ch}}$ & $3.95$ & $1.899$ & $0.88$ & $0.007$ & $0.12$ & $0.080$ \\
 \begin{enumerate}[label=(\roman*)]
   \item \textbf{Conj.~\ref{conj:mono} (proxy excess3 / highL3):}
   sostenida en el contraste grueso $r=3.30\to 3.85$
-  (excess3 $1.76\to 1.86$; highL3 $0.47\to 0.84$). El \emph{m\'aximo}
-  de mean excess3 en la rejilla no est\'a en caos profundo sino cerca de
-  S$_\infty^-$ ($r\approx 3.566$, excess3 $\approx 2.38$). Es decir:
-  monotonia gruesa pre$\to$chaos s\'i; plateau de caos desarrollado
-  \textbf{no} es el pico de abundancia media del proxy.
+  (excess3 $2.210\to 2.802$). highL3 con umbral $1.75$ vale $0.994$ y
+  $0.995$: el umbral ya no separa los dos reg\'imenes. El m\'aximo de
+  mean excess3 en esta rejilla de $32$ puntos est\'a en $r=3.95$
+  ($2.897$), no cerca de $S_\infty^-$. La banda de acumulaci\'on sigue
+  en torno a $2.38$. El pico en $r\approx 3.566$ ($2.38$) es el resultado
+  del conteo agrupado de las versiones $\le 0.2.2$.
   \item \textbf{Conj.~\ref{conj:mono} (fuerte $\Res_{\mathrm{pair}}$):}
   con el protocolo del barrido ($w{=}13$) el residual parece m\'aximo
   en S$_k$ de periodo bajo y $\approx 0$ en caos --- interpretaci\'on

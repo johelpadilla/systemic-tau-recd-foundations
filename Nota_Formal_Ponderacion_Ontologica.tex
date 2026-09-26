@@ -622,8 +622,11 @@ $\mathrm{mean}\,L_1\approx 0.215$. Aproximaci\'on de forma
 Estaciones $r\in\{3.20,\ldots,3.85\}$, $N_{\mathrm{real}}=4$:
 $\mathrm{corr}_r(f_3^{\mathrm{T}},f_3^{\mathrm{G}})\approx 0.997$
 (ambos motores empujan el share de L3 en el mismo sentido cualitativo);
-$\mathrm{corr}_r(f_3^{\mathrm{T}},\mathrm{excess3})\approx 0.08$
---- refuerzo emp\'irico de \textbf{abundancia $\ne$ share}.
+$\mathrm{corr}_r(f_3^{\mathrm{T}},\mathrm{excess3})\approx 0.69$
+con el conteo por tuplas de nested-recd 0.2.3
+(corrida \texttt{gibbs\_alpha\_20260925\_214615}; la cifra $0.08$
+pertenece al conteo agrupado de s\'imbolos de las versiones $\le 0.2.2$)
+--- la abundancia y el share siguen sin ser el mismo objeto.
 En $r\le r_\infty$ el proxy $\lambda(r)=0$ deja ambos motores en el
 baseline; en caos desarrollado ($r=3.85$) Gibbs eleva levemente
 $f_3$ ($0.926$ vs $0.884$ template).
